@@ -122,3 +122,85 @@ def build_vectorstore(chunks: list) -> Chroma:
     )
 
     return vectorstore
+
+
+def verify_vectorstore(vectorstore: Chroma) -> None:
+    """Quick sanity check."""
+
+    print("Running verification query...\n")
+
+    test_query = "child fever home treatment"
+
+    test_results = vectorstore.similarity_search(
+        test_query,
+        k=2
+    )
+
+    if test_results:
+
+        print("  ✅ Retrieval working\n")
+
+        print(f"     Source : {test_results[0].metadata.get('doc_name')}")
+        print(f"     Preview: {test_results[0].page_content[:120]}...\n")
+
+    else:
+        print("  ⚠️ No results returned — check your PDFs\n")
+
+
+def main():
+
+    print("\n" + "═" * 55)
+    print("  ASHA Knowledge Base — Document Ingestion")
+    print("═" * 55 + "\n")
+
+    # ── STEP 1: Load PDFs ────────────────────────────────────────────────────
+
+    print("STEP 1 — Loading PDFs")
+    print("─" * 40)
+
+    docs = load_pdfs(DOCS_DIR)
+
+    print(f"Total pages loaded: {len(docs)}\n")
+
+    # ── STEP 2: Split Documents ─────────────────────────────────────────────
+
+    print("STEP 2 — Splitting into chunks")
+    print("─" * 40)
+
+    chunks = split_documents(docs)
+
+    # ── STEP 3: Clear Existing ChromaDB ─────────────────────────────────────
+
+    print("STEP 3 — Cleaning old ChromaDB")
+    print("─" * 40)
+
+    if CHROMA_DIR.exists():
+        print("Deleting existing ChromaDB...")
+        shutil.rmtree(CHROMA_DIR)
+
+    print("  ✅ Old DB cleared\n")
+
+    # ── STEP 4: Embed + Store ───────────────────────────────────────────────
+
+    print("STEP 4 — Embedding + storing in ChromaDB")
+    print("─" * 40)
+
+    vectorstore = build_vectorstore(chunks)
+
+    print(f"  ✅ {len(chunks)} chunks stored in ChromaDB\n")
+
+    # ── STEP 5: Verification ────────────────────────────────────────────────
+
+    print("STEP 5 — Verification")
+    print("─" * 40)
+
+    verify_vectorstore(vectorstore)
+
+    print("═" * 55)
+    print("  ✅ Ingestion complete — ready for RAG")
+    print(f"  DB location: {CHROMA_DIR}")
+    print("═" * 55 + "\n")
+
+
+if _name_ == "_main_":
+    main()
