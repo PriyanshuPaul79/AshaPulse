@@ -32,3 +32,48 @@ DOC_METADATA = {
     "imnci_chart_booklet.pdf":            "F-IMNCI Chart Booklet",
 }
 
+# ── Chunking Configuration ────────────────────────────────────────────────────
+
+CHUNK_SIZE    = 1000
+CHUNK_OVERLAP = 200
+
+
+def split_documents(docs: list) -> list:
+    """Split pages into chunks for embedding."""
+
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
+        separators=["\n\n", "\n", ".", " "],
+    )
+
+    log.info("Splitting documents into chunks...")
+
+    chunks = splitter.split_documents(docs)
+
+    log.info(f"{len(docs)} pages → {len(chunks)} chunks")
+
+    return chunks
+
+
+def build_vectorstore(chunks: list) -> Chroma:
+    """Embed chunks and store in ChromaDB."""
+
+    log.info("Loading embedding model...")
+
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        model_kwargs={"device": "cpu"},
+        encode_kwargs={"normalize_embeddings": True},
+    )
+
+    log.info(f"Building ChromaDB vector store at {CHROMA_DIR}...")
+
+    vectorstore = Chroma.from_documents(
+        documents=list(tqdm(chunks, desc="  Embedding chunks")),
+        embedding=embeddings,
+        persist_directory=str(CHROMA_DIR),
+        collection_name="asha_knowledge_base",
+    )
+
+    return vectorstore
