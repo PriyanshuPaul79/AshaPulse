@@ -86,3 +86,77 @@ def parse_response(text: str) -> dict:
         if match:
             return json.loads(match.group())
         raise ValueError(f"Could not parse JSON from response:\n{cleaned}")
+
+
+
+
+
+        # ── Chain Builder ─────────────────────────────────────────────────────────────
+
+def load_retriever():
+    """Load ChromaDB and return retriever."""
+
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        model_kwargs={"device": "cpu"},
+        encode_kwargs={"normalize_embeddings": True},
+    )
+
+    vectorstore = Chroma(
+        persist_directory=str(CHROMA_DIR),
+        embedding_function=embeddings,
+        collection_name="asha_knowledge_base",
+    )
+
+    return vectorstore.as_retriever(
+        search_type="similarity",
+        search_kwargs={"k": 4},
+    )
+
+
+def build_chain():
+    """Build and return the full RAG chain function."""
+
+    retriever = load_retriever()
+
+    llm = ChatOllama(
+        model="deepseek-r1:7b",
+        temperature=0,
+        format="json",
+        num_ctx=4096,
+    )
+
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", SYSTEM_PROMPT),
+        ("human", HUMAN_PROMPT),
+    ])
+
+    chain = prompt | llm | StrOutputParser()
+
+    def run_chain(symptoms: str) -> dict:
+        """
+        Full pipeline:
+        symptoms → retrieve context → LLM → clean → parse → dict
+        """
+
+        # Step 1: Retrieve relevant medical context
+        docs    = retriever.invoke(symptoms)
+        print("\n--- Retrieved Chunks ---")
+        for i, doc in enumerate(docs):
+            print(f"Chunk {i+1}: {doc.metadata.get('doc_name')}")
+            print(f"Preview: {doc.page_content[:100]}")
+        print("------------------------\n")
+        context = "\n\n".join([d.page_content for d in docs])
+
+        # Step 2: Run chain
+        raw_response = chain.invoke({
+            "symptoms": symptoms,
+            "context":  context,
+        })
+
+        # Step 3: Clean + parse
+        result = parse_response(raw_response)
+
+        return result
+
+    return run_chain
