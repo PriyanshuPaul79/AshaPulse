@@ -160,3 +160,40 @@ def build_chain():
         return result
 
     return run_chain
+
+
+# ── Singleton ─────────────────────────────────────────────────────────────────
+# Load once, reuse across all API requests
+# Prevents reloading embeddings + ChromaDB on every call
+
+_chain = None
+
+def get_chain():
+    global _chain
+    if _chain is None:
+        print("Initialising NiDaan RAG chain (first request only)...")
+        _chain = build_chain()
+        print("✅ Chain ready.\n")
+    return _chain
+
+
+# ── Quick Test ────────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+
+    test_cases = [
+        "bacche ko 3 din se bukhaar hai, khaana nahi kha raha",
+        "mahila ko prasav ke baad bahut zyada khoon aa raha hai",
+        "pet mein dard hai aur dast ho raha hai",
+    ]
+
+    chain = get_chain()
+
+    for symptoms in test_cases:
+        print(f"{'─'*55}")
+        print(f"Input : {symptoms}")
+        print(f"{'─'*55}")
+
+        result = chain(symptoms)
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        print()
