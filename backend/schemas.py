@@ -26,3 +26,34 @@ class ASHAResponse(BaseModel):
     home_care:      List[str]     # steps if not referring (empty if refer=True)
     medicines:      List[Medicine] # only ASHA drug kit medicines
     advice_in_hindi: str          # plain Hindi summary for patient
+    suggested_services: List[str] = [] # new optional field, default empty
+
+
+class PHCRecommendationRequest(BaseModel):
+    district: str                    # "Paschim Bardhaman"
+    criticality: str                 # "low" | "medium" | "high"
+    required_services: List[str]     # derived from diagnosis
+    patient_lat: Optional[float] = None   # if available
+    patient_lng: Optional[float] = None   # if available
+
+class PHCResult(BaseModel):
+    id: str
+    name: str
+    block: str
+    address: str
+    contact: Optional[str]
+    open_24hr: bool
+    timing: str
+    services: List[str]
+    ambulance: bool
+    latitude: Optional[float]
+    longitude: Optional[float]
+    distance_km: Optional[float]     # None if no patient coords
+    service_match_score: float       # 0.0 to 1.0
+    match_reason: str                # human-readable why this PHC
+
+class PHCRecommendationResponse(BaseModel):
+    success: bool
+    district: str
+    recommendations: List[PHCResult]
+    error: Optional[str] = None
