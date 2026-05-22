@@ -20,7 +20,13 @@ from contextlib import asynccontextmanager
 import traceback
 
 from chain import get_chain
-from schemas import ASHAResponse
+from schemas import (
+    ASHAResponse,
+    PHCRecommendationRequest,
+    PHCRecommendationResponse,
+    PHCResult
+)
+from phc_recommender import recommend_phcs
 
 # ── Lifespan — load chain once on startup ─────────────────────────────────────
 
@@ -120,4 +126,37 @@ def diagnose(request: DiagnoseRequest):
         return DiagnoseResponse(
             success=False,
             error=str(e),
+        )
+
+
+@app.post("/recommend-phc", response_model=PHCRecommendationResponse)
+def recommend_phc(request: PHCRecommendationRequest):
+    """
+    Recommend the top 3 PHCs based on district, criticality,
+    required services, and optional patient coordinates.
+    """
+    try:
+        recommendations_data = recommend_phcs(
+            district=request.district,
+            criticality=request.criticality,
+            required_services=request.required_services,
+            patient_lat=request.patient_lat,
+            patient_lng=request.patient_lng
+        )
+        
+        # Map list of dicts to Pydantic PHCResult models
+        recommendations = [PHCResult(**rec) for rec in recommendations_data]
+        
+        return PHCRecommendationResponse(
+            success=True,
+            district=request.district,
+            recommendations=recommendations
+        )
+    except Exception as e:
+        traceback.print_exc()
+        return PHCRecommendationResponse(
+            success=False,
+            district=request.district,
+            recommendations=[],
+            error=str(e)
         )
