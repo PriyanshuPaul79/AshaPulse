@@ -18,7 +18,7 @@ export default function App() {
           <Route index element={<HomePage />} />
           <Route path="result" element={<ResultPage />} />
           <Route path="phc" element={<PhcPage />} />
-          <Route path="history" element={<HistoryPage />} />
+          {/* <Route path="history" element={<HistoryPage />} /> */}
         </Route>
       </Routes>
     </HashRouter>
