@@ -19,36 +19,49 @@ export default function PhcPage() {
     'Purba Bardhaman',
     'Hooghly',
     'Howrah',
-    'Kolkata'
+    'Kolkata',
+    'Bankura'
   ];
 
   const [selectedDistrict, setSelectedDistrict] = useState(paramDistrict || 'Paschim Bardhaman');
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
-
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | undefined>(undefined);
   // Hook for recommended PHCs
+
   const { recommend, isLoading, error, results } = usePHCRecommend();
 
   // 1. Get user coordinates once on mount
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCoords({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          });
-        },
-        (err) => {
-          console.log('Location permission denied or unavailable:', err);
-        },
-        { timeout: 5000 }
-      );
+  (position) => {
+    setCoords({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    });
+  },
+  (err) => {
+    console.log('Location error:', err);
+    setCoords(null);
+  },
+  { 
+    timeout: 10000,
+    enableHighAccuracy: true,  
+    maximumAge: 0              
+  }
+);
     }
   }, []);
 
   // 2. Fetch recommendations whenever district, coords, or searchParams change
   useEffect(() => {
+    if (coords === undefined) return  // still waiting
     const services = paramServices ? paramServices.split(',') : [];
+
+    console.log("Sending to backend:", {  // ← add this
+    district: selectedDistrict,
+    patient_lat: coords?.lat,
+    patient_lng: coords?.lng
+  });
     recommend({
       district: selectedDistrict,
       criticality: paramCriticality || 'low',
