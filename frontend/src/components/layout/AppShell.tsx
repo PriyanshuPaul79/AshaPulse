@@ -7,7 +7,7 @@ export default function AppShell() {
 
   const navItems = [
     { to: "/", icon: PlusCircle, label: "Home", hindiLabel: "Ghar" },
-    { to: "/history", icon: ClipboardList, label: "History", hindiLabel: "Itihas" },
+    // { to: "/history", icon: ClipboardList, label: "History", hindiLabel: "Itihas" },
     { to: "/phc", icon: MapPin, label: "PHC", hindiLabel: "Kendra" }
   ];
 
