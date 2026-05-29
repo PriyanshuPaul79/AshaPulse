@@ -1,0 +1,17 @@
+langchain
+langchain-core
+langchain-community
+langchain-anthropic
+langchain-chroma
+langchain-huggingface
+huggingface-hub
+langchain-ollama
+langchain-groq
+chromadb
+pdfplumber
+pypdf
+httpx
+python-dotenv
+fastapi
+uvicorn
+sentence-transformers
