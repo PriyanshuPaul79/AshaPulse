@@ -64,7 +64,7 @@ export default function HistoryPage() {
       {/* ── Page Header ── */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="font-display font-extrabold text-2xl text-slate-900 tracking-tight">
+          <h2 className="font-display font-extrabold text-2xl text-slate-900 dark:text-slate-100 tracking-tight">
             Case History / रिकॉर्ड
           </h2>
           <p className="text-text-secondary text-xs font-noto mt-0.5">ASHA/ANM द्वारा पूर्व में जांचे गए मरीज</p>
@@ -72,7 +72,7 @@ export default function HistoryPage() {
         {records.length > 0 && (
           <button
             onClick={handleClear}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 border border-transparent hover:border-rose-100 dark:hover:border-rose-800 transition-all cursor-pointer"
             title="Delete all / सब हटाएँ"
           >
             <Trash2 className="w-4 h-4" />
@@ -85,12 +85,12 @@ export default function HistoryPage() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center py-20 bg-white border border-slate-200/60 rounded-3xl p-6 shadow-xs flex flex-col items-center justify-center"
+          className="text-center py-20 bg-white dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 rounded-3xl p-6 shadow-xs flex flex-col items-center justify-center"
         >
-          <div className="w-20 h-20 bg-slate-50 rounded-2xl flex items-center justify-center mb-4 border border-slate-100">
-            <FileText className="w-9 h-9 text-slate-300" />
+          <div className="w-20 h-20 bg-slate-50 dark:bg-slate-700 rounded-2xl flex items-center justify-center mb-4 border border-slate-100 dark:border-slate-600">
+            <FileText className="w-9 h-9 text-slate-300 dark:text-slate-500" />
           </div>
-          <h3 className="text-slate-800 font-extrabold text-base mb-1">कोई पिछला मामला नहीं</h3>
+          <h3 className="text-slate-800 dark:text-slate-200 font-extrabold text-base mb-1">कोई पिछला मामला नहीं</h3>
           <p className="text-text-muted text-sm max-w-xs mx-auto mb-6">
             No past cases found. Patients you diagnose will appear here for subsequent follow-up.
           </p>
@@ -104,20 +104,20 @@ export default function HistoryPage() {
       ) : (
         <>
           {/* Stats Bar */}
-          <div className="grid grid-cols-4 gap-2.5 bg-white border border-slate-200/80 p-3 rounded-2xl shadow-xs">
-            <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 text-center">
-              <span className="block text-lg md:text-xl font-extrabold text-slate-800">{stats.total}</span>
+          <div className="grid grid-cols-4 gap-2.5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 p-3 rounded-2xl shadow-xs">
+            <div className="bg-slate-50 dark:bg-slate-700/60 border border-slate-100 dark:border-slate-600/60 rounded-xl p-2.5 text-center">
+              <span className="block text-lg md:text-xl font-extrabold text-slate-800 dark:text-slate-100">{stats.total}</span>
               <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Total</span>
             </div>
-            <div className="bg-red-50/50 border border-red-100/50 rounded-xl p-2.5 text-center">
+            <div className="bg-red-50/50 dark:bg-red-900/10 border border-red-100/50 dark:border-red-800/30 rounded-xl p-2.5 text-center">
               <span className="block text-lg md:text-xl font-extrabold text-danger">{stats.high}</span>
               <span className="text-[10px] font-bold text-danger/80 uppercase tracking-wider">High</span>
             </div>
-            <div className="bg-amber-50/50 border border-amber-100/50 rounded-xl p-2.5 text-center">
+            <div className="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100/50 dark:border-amber-800/30 rounded-xl p-2.5 text-center">
               <span className="block text-lg md:text-xl font-extrabold text-warning">{stats.medium}</span>
               <span className="text-[10px] font-bold text-warning/80 uppercase tracking-wider">Medium</span>
             </div>
-            <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl p-2.5 text-center">
+            <div className="bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100/50 dark:border-emerald-800/30 rounded-xl p-2.5 text-center">
               <span className="block text-lg md:text-xl font-extrabold text-success">{stats.low}</span>
               <span className="text-[10px] font-bold text-success/80 uppercase tracking-wider">Low</span>
             </div>
@@ -133,7 +133,7 @@ export default function HistoryPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="लक्षण या निदान से खोजें / Search by symptoms or reasoning..."
-                className="w-full bg-white border border-slate-200 rounded-xl py-3 pl-11 pr-4 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-info focus:ring-4 focus:ring-info/5 transition-all"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl py-3 pl-11 pr-4 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-info focus:ring-4 focus:ring-info/5 transition-all"
               />
             </div>
 
@@ -146,8 +146,8 @@ export default function HistoryPage() {
                   onClick={() => setFilter(type)}
                   className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
                     filter === type
-                      ? "bg-slate-900 text-white shadow-xs"
-                      : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+                      ? "bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-xs"
+                      : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
                   }`}
                 >
                   {type}
@@ -157,7 +157,7 @@ export default function HistoryPage() {
           </div>
 
           {/* Timeline Style List */}
-          <div className="relative pl-6 md:pl-8 border-l border-slate-200 space-y-5 ml-3 md:ml-4 py-1.5">
+          <div className="relative pl-6 md:pl-8 border-l border-slate-200 dark:border-slate-700 space-y-5 ml-3 md:ml-4 py-1.5">
             <AnimatePresence initial={false}>
               {filteredRecords.map((record, idx) => {
                 const criticality = record.result?.criticality || "low";
@@ -169,10 +169,10 @@ export default function HistoryPage() {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.2, delay: idx * 0.05 }}
                     onClick={() => handleView(record)}
-                    className="relative bg-white border border-slate-200/80 hover:border-info/40 rounded-2xl p-4 md:p-5 shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer group"
+                    className="relative bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 hover:border-info/40 rounded-2xl p-4 md:p-5 shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer group"
                   >
                     {/* Timeline dot */}
-                    <span className={`absolute -left-10 md:-left-12 top-6 w-3 h-3 rounded-full border border-white z-10 ${SEVERITY_DOT[criticality]}`} />
+                    <span className={`absolute -left-10 md:-left-12 top-6 w-3 h-3 rounded-full border border-white dark:border-slate-900 z-10 ${SEVERITY_DOT[criticality]}`} />
                     
                     <div className="space-y-2.5">
                       {/* Meta header */}
@@ -181,30 +181,30 @@ export default function HistoryPage() {
                           <Calendar className="w-3.5 h-3.5" />
                           <span>{formatDate(record.timestamp)}</span>
                         </span>
-                        <span className="flex items-center gap-1 font-mono text-[10px] bg-slate-100 px-2 py-0.5 rounded border border-slate-200/50">
+                        <span className="flex items-center gap-1 font-mono text-[10px] bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded border border-slate-200/50 dark:border-slate-600/50">
                           <Clock className="w-3 h-3" />
                           <span>{new Date(record.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                         </span>
                       </div>
 
                       {/* Symptoms */}
-                      <p className="text-sm font-semibold text-slate-800 line-clamp-2 leading-relaxed font-noto">
+                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 line-clamp-2 leading-relaxed font-noto">
                         "{record.symptoms}"
                       </p>
 
                       {/* Result summary */}
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                      <div className="pt-2 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
-                          <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 ${SEVERITY_TEXT[criticality]}`}>
+                          <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 ${SEVERITY_TEXT[criticality]}`}>
                             {criticality}
                           </span>
                           {record.result?.refer_to_phc ? (
-                            <span className="text-[10px] font-bold text-rose-600 bg-rose-50 border border-rose-100 px-1.5 py-0.5 rounded flex items-center gap-1">
+                            <span className="text-[10px] font-bold text-rose-600 bg-rose-50 dark:bg-rose-900/20 border border-rose-100 dark:border-rose-800/30 px-1.5 py-0.5 rounded flex items-center gap-1">
                               <ShieldAlert className="w-3 h-3" />
                               <span>PHC Refer</span>
                             </span>
                           ) : (
-                            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded flex items-center gap-1">
+                            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/30 px-1.5 py-0.5 rounded flex items-center gap-1">
                               <CheckCircle2 className="w-3 h-3" />
                               <span>Home Care</span>
                             </span>
