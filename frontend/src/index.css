@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400..700;1,400..700&family=Noto+Sans+Devanagari:wght@400..700&family=Sora:wght@100..800&display=swap');
 @import "tailwindcss";
 
+/* Tell Tailwind v4 to use the .dark class for dark: variants */
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-background: #f8fafc;
   --color-surface: #ffffff;
@@ -29,6 +32,27 @@ body {
   @apply bg-background text-text-primary font-sans antialiased;
 }
 
+/* ── Dark Mode Token Overrides ──────────────────────────────────── */
+.dark {
+  --color-background: #0f1117;
+  --color-surface: #1a1d27;
+  --color-surface-elevated: #22263a;
+  --color-border: #2d3148;
+
+  --color-success: #34d399;
+  --color-success-bg: #052e1c;
+  --color-warning: #fbbf24;
+  --color-warning-bg: #27200a;
+  --color-danger: #f87171;
+  --color-danger-bg: #2d1212;
+  --color-info: #60a5fa;
+  --color-info-bg: #0d1f3e;
+
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+}
+
 /* Custom modern scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
@@ -43,6 +67,12 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }
 
 @keyframes pulseBorder {
