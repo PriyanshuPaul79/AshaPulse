@@ -11,6 +11,7 @@
 import sys
 import os
 sys.path.append(os.path.dirname(__file__))
+os.environ["HF_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN", "")
 
 
 from fastapi import FastAPI, HTTPException
@@ -34,7 +35,7 @@ from phc_recommender import recommend_phcs
 async def lifespan(app: FastAPI):
     """Load RAG chain on startup. Keeps it in memory for all requests."""
     print("\nStarting NiDaan API...")
-    get_chain()   # initialise once — cached for all subsequent requests
+    #get_chain()   # initialise once — cached for all subsequent requests
     yield
     print("\nShutting down NiDaan API...")
 
