@@ -85,21 +85,21 @@ export default function PhcPage() {
 
   // Skeleton Card component
   const SkeletonCard = () => (
-    <div className="bg-white border border-slate-200/60 rounded-3xl p-5 animate-pulse space-y-4">
+    <div className="bg-white dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 rounded-3xl p-5 animate-pulse space-y-4">
       <div className="flex gap-3">
-        <div className="w-12 h-12 rounded-2xl bg-slate-100 shrink-0" />
+        <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-700 shrink-0" />
         <div className="flex-1 space-y-2 py-1">
-          <div className="h-4 bg-slate-100 rounded-full w-3/4" />
-          <div className="h-3 bg-slate-100 rounded-full w-1/2" />
+          <div className="h-4 bg-slate-100 dark:bg-slate-700 rounded-full w-3/4" />
+          <div className="h-3 bg-slate-100 dark:bg-slate-700 rounded-full w-1/2" />
         </div>
       </div>
       <div className="space-y-2 pt-2">
-        <div className="h-3 bg-slate-100 rounded-full w-full" />
-        <div className="h-3 bg-slate-100 rounded-full w-5/6" />
+        <div className="h-3 bg-slate-100 dark:bg-slate-700 rounded-full w-full" />
+        <div className="h-3 bg-slate-100 dark:bg-slate-700 rounded-full w-5/6" />
       </div>
       <div className="flex gap-2 pt-2">
-        <div className="h-10 bg-slate-100 rounded-xl flex-1" />
-        <div className="h-10 bg-slate-100 rounded-xl w-20" />
+        <div className="h-10 bg-slate-100 dark:bg-slate-700 rounded-xl flex-1" />
+        <div className="h-10 bg-slate-100 dark:bg-slate-700 rounded-xl w-20" />
       </div>
     </div>
   );
@@ -111,12 +111,12 @@ export default function PhcPage() {
       <div className="flex items-center gap-3">
         <button
           onClick={() => navigate(-1)}
-          className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+          className="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h2 className="font-display font-extrabold text-2xl text-slate-900 tracking-tight flex items-center gap-1.5">
+          <h2 className="font-display font-extrabold text-2xl text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-1.5">
             <Hospital className="w-6 h-6 text-info shrink-0" />
             <span>PHC Recommendation</span>
           </h2>
@@ -158,15 +158,15 @@ export default function PhcPage() {
       )}
 
       {/* ── District Dropdown Selector ── */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-4 md:p-5 shadow-xs">
-        <label className="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-2">
+      <div className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 md:p-5 shadow-xs">
+        <label className="block text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
           Select District / ज़िला चुनें
         </label>
         <div className="relative">
           <select
             value={selectedDistrict}
             onChange={(e) => setSelectedDistrict(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-200 text-slate-800 font-bold rounded-xl p-3.5 appearance-none focus:outline-none focus:bg-white focus:border-info focus:ring-4 focus:ring-info/5 transition-all text-sm cursor-pointer"
+            className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-800 dark:text-slate-100 font-bold rounded-xl p-3.5 appearance-none focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-info focus:ring-4 focus:ring-info/5 transition-all text-sm cursor-pointer"
           >
             {districts.map((d) => (
               <option key={d} value={d}>
@@ -191,12 +191,12 @@ export default function PhcPage() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center py-16 bg-white border border-slate-200/60 rounded-3xl p-6 shadow-xs flex flex-col items-center"
+          className="text-center py-16 bg-white dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 rounded-3xl p-6 shadow-xs flex flex-col items-center"
         >
-          <div className="w-16 h-16 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center mb-4 text-slate-300">
+          <div className="w-16 h-16 bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-full flex items-center justify-center mb-4 text-slate-300 dark:text-slate-500">
             <AlertCircle className="w-7 h-7" />
           </div>
-          <h3 className="text-slate-800 font-extrabold text-base mb-1">कोई स्वास्थ्य केंद्र नहीं मिला</h3>
+          <h3 className="text-slate-800 dark:text-slate-200 font-extrabold text-base mb-1">कोई स्वास्थ्य केंद्र नहीं मिला</h3>
           <p className="text-text-muted text-sm font-noto max-w-xs mx-auto">
             {error || "इस जिले में वर्तमान में कोई डेटा उपलब्ध नहीं है / No PHCs found in this district"}
           </p>
@@ -209,15 +209,15 @@ export default function PhcPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.08 }}
-              className="bg-white border border-slate-200/80 hover:border-info/40 rounded-3xl p-5 md:p-6 shadow-xs hover:shadow-md transition-all duration-200"
+              className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 hover:border-info/40 rounded-3xl p-5 md:p-6 shadow-xs hover:shadow-md transition-all duration-200"
             >
               {/* Header Info */}
               <div className="flex gap-4 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-info-bg/50 border border-info/10 flex items-center justify-center text-info shrink-0 select-none shadow-xs">
-                  🏥
+                <div className="w-12 h-12 rounded-2xl  flex items-center justify-center text-info shrink-0 select-none">
+                  <img src="/src/assets/hos_g.png" alt="phc-icon" className="w-12 h-12" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-display font-extrabold text-slate-900 leading-tight mb-1 text-base md:text-lg">
+                  <h3 className="font-display font-extrabold text-slate-900 dark:text-slate-100 leading-tight mb-1 text-base md:text-lg">
                     {phc.name}
                   </h3>
                   <p className="text-xs text-text-secondary flex items-start gap-1 font-noto">
@@ -228,9 +228,9 @@ export default function PhcPage() {
               </div>
 
               {/* Match Score & Metrics */}
-              <div className="bg-slate-50/50 border border-slate-100 rounded-2xl p-3.5 mb-4">
+              <div className="bg-slate-50/50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-600/60 rounded-2xl p-3.5 mb-4">
                 <div className="flex justify-between items-center text-xs mb-2">
-                  <span className="font-extrabold text-slate-700 flex items-center gap-1">
+                  <span className="font-extrabold text-slate-700 dark:text-slate-300 flex items-center gap-1">
                     <Sparkles className="w-3.5 h-3.5 text-info" />
                     <span>Match Compatibility:</span>
                     <span className={`px-2 py-0.5 rounded font-mono font-bold ${getProgressBarBg(phc.service_match_score)}`}>
@@ -238,7 +238,7 @@ export default function PhcPage() {
                     </span>
                   </span>
                 </div>
-                <div className="w-full bg-slate-200/60 h-1.5 rounded-full overflow-hidden mb-2">
+                <div className="w-full bg-slate-200/60 dark:bg-slate-600/60 h-1.5 rounded-full overflow-hidden mb-2">
                   <div
                     className={`h-full ${getProgressBarColor(phc.service_match_score)} transition-all duration-700`}
                     style={{ width: `${phc.service_match_score * 100}%` }}
@@ -251,7 +251,7 @@ export default function PhcPage() {
 
               {/* Facility details */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-text-secondary mb-4">
-                <div className="flex items-center gap-2 font-medium bg-slate-50 px-3 py-2 rounded-xl">
+                <div className="flex items-center gap-2 font-medium bg-slate-50 dark:bg-slate-700/50 px-3 py-2 rounded-xl">
                   <Clock className="w-4 h-4 text-slate-400 shrink-0" />
                   <span className="truncate">{phc.timing}</span>
                   {phc.open_24hr && (
@@ -262,7 +262,7 @@ export default function PhcPage() {
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 font-medium bg-slate-50 px-3 py-2 rounded-xl">
+                <div className="flex items-center gap-2 font-medium bg-slate-50 dark:bg-slate-700/50 px-3 py-2 rounded-xl">
                   <Phone className="w-4 h-4 text-slate-400 shrink-0" />
                   <span className="truncate font-mono">{phc.contact || "No Phone Contact"}</span>
                 </div>
@@ -273,21 +273,21 @@ export default function PhcPage() {
                 {phc.services.map((s) => (
                   <span
                     key={s}
-                    className="px-2.5 py-1 bg-slate-100 border border-slate-200/50 rounded-lg text-[10px] uppercase tracking-wider font-bold text-slate-600 flex items-center gap-1"
+                    className="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 border border-slate-200/50 dark:border-slate-600/50 rounded-lg text-[10px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1"
                   >
                     <CheckCircle2 className="w-3 h-3 text-info" />
                     <span>{s}</span>
                   </span>
                 ))}
                 {phc.ambulance && (
-                  <span className="px-2.5 py-1 bg-red-50 border border-red-200/60 rounded-lg text-[10px] uppercase tracking-wider font-black text-rose-600 animate-pulse flex items-center gap-1 shadow-xs shadow-red-100/50">
+                  <span className="px-2.5 py-1 bg-red-50 dark:bg-red-900/20 border border-red-200/60 dark:border-red-800/30 rounded-lg text-[10px] uppercase tracking-wider font-black text-rose-600 animate-pulse flex items-center gap-1 shadow-xs shadow-red-100/50">
                     🚑 Emergency Ambulance
                   </span>
                 )}
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2.5 pt-2 border-t border-slate-100">
+              <div className="flex gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-700">
                 {phc.latitude && phc.longitude ? (
                   <button
                     onClick={() => {
@@ -302,7 +302,7 @@ export default function PhcPage() {
                 ) : (
                   <button
                     disabled
-                    className="flex-1 h-11 bg-slate-100 text-slate-400 cursor-not-allowed font-bold rounded-xl flex items-center justify-center gap-1.5 text-xs border border-slate-200/50"
+                    className="flex-1 h-11 bg-slate-100 dark:bg-slate-700 text-slate-400 cursor-not-allowed font-bold rounded-xl flex items-center justify-center gap-1.5 text-xs border border-slate-200/50 dark:border-slate-600/50"
                   >
                     <Compass className="w-4 h-4 shrink-0" />
                     <span>DIRECTIONS N/A</span>
@@ -312,7 +312,7 @@ export default function PhcPage() {
                 {phc.contact ? (
                   <a
                     href={`tel:${phc.contact}`}
-                    className="px-5 h-11 border border-slate-200 hover:border-info/40 hover:bg-slate-50 text-slate-700 font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all text-xs cursor-pointer"
+                    className="px-5 h-11 border border-slate-200 dark:border-slate-700 hover:border-info/40 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all text-xs cursor-pointer"
                   >
                     <PhoneCall className="w-4 h-4 shrink-0 text-info" />
                     <span>CALL</span>
@@ -320,9 +320,9 @@ export default function PhcPage() {
                 ) : (
                   <button
                     disabled
-                    className="px-5 h-11 border border-slate-200 text-slate-300 cursor-not-allowed font-bold rounded-xl flex items-center justify-center gap-1.5 text-xs"
+                    className="px-5 h-11 border border-slate-200 dark:border-slate-700 text-slate-300 dark:text-slate-600 cursor-not-allowed font-bold rounded-xl flex items-center justify-center gap-1.5 text-xs"
                   >
-                    <PhoneCall className="w-4 h-4 shrink-0 text-slate-200" />
+                    <PhoneCall className="w-4 h-4 shrink-0 text-slate-200 dark:text-slate-600" />
                     <span>CALL N/A</span>
                   </button>
                 )}

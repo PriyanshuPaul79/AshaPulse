@@ -24,7 +24,7 @@ const SEVERITY_CONFIG: Record<CriticalityLevel, SeverityStyle> = {
     hindiLabel: "कम गंभीर (सामान्य)",
     bgClass: "bg-success-bg/60 border-success/20 text-success",
     badgeClass: "bg-success text-white shadow-sm shadow-success/20",
-    glowClass: "shadow-emerald-100/50 border-success",
+    glowClass: "shadow-emerald-100/50 dark:shadow-emerald-900/20 border-success",
     icon: "🟢"
   },
   medium: {
@@ -32,7 +32,7 @@ const SEVERITY_CONFIG: Record<CriticalityLevel, SeverityStyle> = {
     hindiLabel: "मध्यम गंभीर (निगरानी रखें)",
     bgClass: "bg-warning-bg/60 border-warning/20 text-warning",
     badgeClass: "bg-warning text-slate-900 shadow-sm shadow-warning/20 font-bold",
-    glowClass: "shadow-amber-100/50 border-warning",
+    glowClass: "shadow-amber-100/50 dark:shadow-amber-900/20 border-warning",
     icon: "🟡"
   },
   high: {
@@ -40,7 +40,7 @@ const SEVERITY_CONFIG: Record<CriticalityLevel, SeverityStyle> = {
     hindiLabel: "अति गंभीर (आपातकालीन स्थिति)",
     bgClass: "bg-danger-bg/60 border-danger/20 text-danger",
     badgeClass: "bg-danger text-white shadow-sm shadow-danger/20 animate-pulse",
-    glowClass: "shadow-red-100/80 animate-pulse-border-red border-danger",
+    glowClass: "shadow-red-100/80 dark:shadow-red-900/20 animate-pulse-border-red border-danger",
     icon: "🔴"
   }
 };
@@ -57,14 +57,11 @@ export default function ResultPage() {
   useEffect(() => {
     const session = loadResultFromSession();
     if (!session) {
-      // No result in session — go back home
       navigate("/");
       return;
     }
     setData(session.result);
     setSymptoms(session.symptoms);
-
-    // Auto-save to local history on diagnostic completion
     saveToHistory(session.symptoms, session.result);
   }, [navigate]);
 
@@ -83,7 +80,6 @@ export default function ResultPage() {
   const isHigh = data.criticality === "high";
   const isMedium = data.criticality === "medium";
 
-  // Toggle helper for the checklist
   const toggleGuideline = (idx: number) => {
     setCheckedGuidelines(prev => ({
       ...prev,
@@ -95,17 +91,17 @@ export default function ResultPage() {
     <div className="pb-32">
       
       {/* ── Top Header ── */}
-      <div className="sticky top-0 bg-white/80 backdrop-blur-md border-b border-border z-10 -mx-4 px-4 py-3 mb-6">
+      <div className="sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-border z-10 -mx-4 px-4 py-3 mb-6">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
           </button>
           
-          <h2 className="font-display font-extrabold text-sm text-slate-800">
+          <h2 className="font-display font-extrabold text-sm text-slate-800 dark:text-slate-200">
             Diagnosis Result / निदान विवरण
           </h2>
           
@@ -117,7 +113,7 @@ export default function ResultPage() {
             className={`flex items-center gap-1 px-3 py-1.5 rounded-full border text-xs font-bold transition-all cursor-pointer ${
               saved
                 ? "bg-success-bg border-success/30 text-success"
-                : "border-slate-200 text-slate-600 hover:border-success/40 hover:text-success"
+                : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-success/40 hover:text-success"
             }`}
           >
             {saved ? (
@@ -162,7 +158,7 @@ export default function ResultPage() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`bg-white border rounded-3xl p-5 md:p-6 shadow-md ${sev.glowClass}`}
+          className={`bg-white dark:bg-slate-800 border rounded-3xl p-5 md:p-6 shadow-md ${sev.glowClass}`}
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -175,7 +171,7 @@ export default function ResultPage() {
                   <span className={`text-xs font-black px-2.5 py-1 rounded-md tracking-wider ${sev.badgeClass}`}>
                     {sev.label}
                   </span>
-                  <span className="text-slate-800 font-bold text-base md:text-lg font-noto">
+                  <span className="text-slate-800 dark:text-slate-100 font-bold text-base md:text-lg font-noto">
                     {sev.hindiLabel}
                   </span>
                 </div>
@@ -204,13 +200,13 @@ export default function ResultPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="bg-white border border-slate-200/80 rounded-3xl p-5 md:p-6 shadow-xs"
+          className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-3xl p-5 md:p-6 shadow-xs"
         >
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-3 flex items-center gap-1.5">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-1.5">
             <ClipboardList className="w-4 h-4 text-info" />
             <span>Clinical Reasoning / निदान का मुख्य कारण</span>
           </h4>
-          <p className="text-sm md:text-base leading-relaxed text-slate-700 font-medium">
+          <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300 font-medium">
             {data.reason}
           </p>
         </motion.div>
@@ -221,12 +217,12 @@ export default function ResultPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-gradient-to-br from-info-bg to-emerald-50/20 border border-info/10 rounded-3xl p-6 shadow-sm"
+            className="bg-gradient-to-br from-info-bg to-emerald-50/20 dark:from-info-bg dark:to-emerald-900/10 border border-info/10 rounded-3xl p-6 shadow-sm"
           >
             <h4 className="text-xs font-bold uppercase tracking-wider text-info mb-3 flex items-center gap-1.5">
               🗣️ Hindi Advice / हिंदी में महत्वपूर्ण सलाह
             </h4>
-            <p className="font-hindi text-lg md:text-xl font-bold leading-relaxed text-slate-800 select-all">
+            <p className="font-hindi text-lg md:text-xl font-bold leading-relaxed text-slate-800 dark:text-slate-100 select-all">
               {data.advice_in_hindi}
             </p>
           </motion.div>
@@ -238,7 +234,7 @@ export default function ResultPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
-            className="bg-red-50/50 border border-danger/30 rounded-3xl p-5 md:p-6 shadow-xs"
+            className="bg-red-50/50 dark:bg-red-900/10 border border-danger/30 rounded-3xl p-5 md:p-6 shadow-xs"
           >
             <h4 className="text-xs font-bold uppercase tracking-wider text-danger mb-4 flex items-center gap-1.5">
               <AlertCircle className="w-4.5 h-4.5 text-danger animate-pulse" />
@@ -248,7 +244,7 @@ export default function ResultPage() {
               {data.red_flags.map((flag, i) => (
                 <div
                   key={i}
-                  className="bg-white border border-danger/10 rounded-xl p-3.5 text-sm text-red-950 font-semibold font-noto flex gap-2.5 items-start"
+                  className="bg-white dark:bg-slate-800 border border-danger/10 rounded-xl p-3.5 text-sm text-red-950 dark:text-red-200 font-semibold font-noto flex gap-2.5 items-start"
                 >
                   <span className="w-2 h-2 rounded-full bg-danger shrink-0 mt-1.5" />
                   <span>{flag}</span>
@@ -264,9 +260,9 @@ export default function ResultPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white border border-slate-200/80 rounded-3xl p-5 md:p-6 shadow-xs"
+            className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-3xl p-5 md:p-6 shadow-xs"
           >
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-1 flex items-center gap-1.5">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-1 flex items-center gap-1.5">
               <CheckCircle2 className="w-4.5 h-4.5 text-success" />
               <span>Home Care protocols / घरेलू उपचार एवं देखभाल</span>
             </h4>
@@ -281,14 +277,14 @@ export default function ResultPage() {
                     onClick={() => toggleGuideline(i)}
                     className={`w-full text-left p-3.5 rounded-xl border text-sm transition-all duration-150 flex items-start gap-3 cursor-pointer ${
                       isChecked 
-                        ? "bg-success-bg/30 border-success/20 text-slate-500 line-through" 
-                        : "bg-slate-50/50 border-slate-200/80 text-slate-700 hover:bg-slate-50 font-semibold"
+                        ? "bg-success-bg/30 border-success/20 text-slate-500 dark:text-slate-400 line-through" 
+                        : "bg-slate-50/50 dark:bg-slate-700/50 border-slate-200/80 dark:border-slate-600/80 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold"
                     }`}
                   >
                     <div className={`w-5 h-5 rounded-md border shrink-0 mt-0.5 flex items-center justify-center transition-all ${
                       isChecked 
                         ? "bg-success border-success text-white" 
-                        : "bg-white border-slate-300"
+                        : "bg-white dark:bg-slate-600 border-slate-300 dark:border-slate-500"
                     }`}>
                       {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                     </div>
@@ -306,9 +302,9 @@ export default function ResultPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
-            className="bg-white border border-slate-200/80 rounded-3xl p-5 md:p-6 shadow-xs"
+            className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-3xl p-5 md:p-6 shadow-xs"
           >
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-4 flex items-center gap-1.5">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-1.5">
               <Pill className="w-4.5 h-4.5 text-info animate-[spin_4s_linear_infinite]" />
               <span>Medicines / सुझाई गई दवाइयां</span>
             </h4>
@@ -319,20 +315,20 @@ export default function ResultPage() {
                   key={i}
                   className="bg-info-bg/40 border border-info/10 rounded-2xl p-4 flex gap-3.5 items-start"
                 >
-                  <div className="p-2.5 bg-white border border-info/20 rounded-xl text-info shrink-0 select-none shadow-xs">
+                  <div className="p-2.5 bg-white dark:bg-slate-700 border border-info/20 rounded-xl text-info shrink-0 select-none shadow-xs">
                     💊
                   </div>
                   <div className="space-y-1 min-w-0">
-                    <p className="font-bold text-slate-800 text-sm md:text-base truncate">
+                    <p className="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base truncate">
                       {med.name}
                     </p>
                     <div className="space-y-0.5 text-xs text-text-secondary">
                       <p className="flex items-center gap-1">
-                        <span className="font-bold text-slate-600">Dose:</span> 
+                        <span className="font-bold text-slate-600 dark:text-slate-400">Dose:</span> 
                         <span className="truncate">{med.dosage}</span>
                       </p>
                       <p className="flex items-center gap-1">
-                        <span className="font-bold text-slate-600">Duration:</span> 
+                        <span className="font-bold text-slate-600 dark:text-slate-400">Duration:</span> 
                         <span className="truncate">{med.duration}</span>
                       </p>
                     </div>

@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { MessageSquare, Mic, Search, ShieldAlert, Sparkles, Activity, MapPin, Heart } from "lucide-react";
-import { diagnose, saveResultToSession, checkHealth } from "../lib/api";
+import { diagnose, saveResultToSession } from "../lib/api";
 
 const CHIPS = [
   { label: "बुखार + दस्त", value: "Bacche ko 2 din se bukhaar hai 38.5°C, dast bhi ho raha hai din mein 4 baar" },
@@ -72,7 +72,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="font-display font-black text-3xl md:text-4xl text-slate-900 tracking-tight leading-tight"
+          className="font-display font-black text-3xl md:text-4xl text-slate-900 dark:text-slate-100 tracking-tight leading-tight"
         >
           AI Diagnostic Assistant for <br />
           <span className="bg-gradient-to-r from-info to-emerald-600 bg-clip-text text-transparent">
@@ -95,13 +95,13 @@ export default function HomePage() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.25 }}
-        className="bg-white border border-slate-200/80 rounded-3xl p-6 md:p-8 shadow-xl shadow-slate-100/70"
+        className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-3xl p-6 md:p-8 shadow-xl shadow-slate-100/70 dark:shadow-slate-900/50"
       >
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-5 bg-info rounded-full" />
             <div>
-              <h3 className="font-bold text-slate-800 text-base md:text-lg">Describe Symptoms / लक्षण बताएं</h3>
+              <h3 className="font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg">Describe Symptoms / लक्षण बताएं</h3>
               <p className="text-text-muted text-xs font-noto mt-0.5">हिंदी, Hinglish, या English में लिखें</p>
             </div>
           </div>
@@ -115,14 +115,14 @@ export default function HomePage() {
             <span>Example cases / त्वरित उदाहरण:</span>
           </p>
           <div className="flex flex-wrap gap-2">
-            {CHIPS.map((chip, idx) => (
+            {CHIPS.map((chip) => (
               <motion.button
                 key={chip.label}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setSymptoms(chip.value)}
-                className="text-xs px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200/60
-                           text-slate-700 hover:border-info/40 hover:bg-info-bg hover:text-info
+                className="text-xs px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-700 border border-slate-200/60 dark:border-slate-600/60
+                           text-slate-700 dark:text-slate-200 hover:border-info/40 hover:bg-info-bg hover:text-info
                            transition-all duration-200 font-noto font-medium"
               >
                 {chip.label}
@@ -138,9 +138,9 @@ export default function HomePage() {
             onChange={(e) => setSymptoms(e.target.value)}
             placeholder="उदाहरण: बच्चे को 2 दिन से तेज बुखार है, सांस लेने में तकलीफ हो रही है और खाना नहीं खा रहा..."
             rows={5}
-            className="w-full bg-slate-50/50 border border-slate-200 rounded-2xl p-4 md:p-5
-                       text-slate-800 placeholder-slate-400 text-sm md:text-base resize-none
-                       focus:outline-none focus:bg-white focus:border-info focus:ring-4
+            className="w-full bg-slate-50/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 md:p-5
+                       text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm md:text-base resize-none
+                       focus:outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-info focus:ring-4
                        focus:ring-info/5 font-noto leading-relaxed transition-all duration-200"
           />
           
@@ -151,7 +151,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={triggerVoiceAlert}
-                className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-info hover:text-info text-slate-500 shadow-xs transition-colors flex items-center justify-center cursor-pointer"
+                className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 hover:border-info hover:text-info text-slate-500 shadow-xs transition-colors flex items-center justify-center cursor-pointer"
                 title="Voice Input / बोलकर लक्षण दर्ज करें"
               >
                 <Mic className="w-4.5 h-4.5" />
@@ -173,7 +173,7 @@ export default function HomePage() {
             </div>
             
             {/* Char count */}
-            <span className="text-[10px] bg-slate-100 text-slate-500 font-mono px-2 py-1 rounded-md border border-slate-200/50">
+            <span className="text-[10px] bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-mono px-2 py-1 rounded-md border border-slate-200/50 dark:border-slate-600/50">
               {symptoms.length} chars
             </span>
           </div>
@@ -201,7 +201,7 @@ export default function HomePage() {
           onClick={handleDiagnose}
           disabled={isLoading || !symptoms.trim()}
           className="w-full bg-gradient-to-r from-info to-blue-600 hover:from-info/95 hover:to-blue-700
-                     disabled:from-slate-100 disabled:to-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed
+                     disabled:from-slate-100 disabled:to-slate-100 dark:disabled:from-slate-700 dark:disabled:to-slate-700 disabled:text-slate-400 disabled:cursor-not-allowed
                      text-white font-bold text-base py-4 rounded-2xl shadow-lg shadow-info/10
                      transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
         >
@@ -212,32 +212,32 @@ export default function HomePage() {
 
       {/* ── Feature highlights grid ── */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-        <div className="bg-slate-50 border border-slate-200/40 rounded-2xl p-4 flex gap-3 items-start">
+        <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200/40 dark:border-slate-700/40 rounded-2xl p-4 flex gap-3 items-start">
           <div className="p-2 rounded-xl bg-info-bg text-info">
             <Activity className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-800">Criticality Checks</h4>
+            <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">Criticality Checks</h4>
             <p className="text-[11px] text-text-secondary mt-0.5 leading-relaxed font-noto">IMNCI आधारित गंभीरता रेटिंग (Low, Medium, High) और आवश्यक उपचार।</p>
           </div>
         </div>
         
-        <div className="bg-slate-50 border border-slate-200/40 rounded-2xl p-4 flex gap-3 items-start">
+        <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200/40 dark:border-slate-700/40 rounded-2xl p-4 flex gap-3 items-start">
           <div className="p-2 rounded-xl bg-danger-bg text-danger">
             <Heart className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-800">Red Flag Detection</h4>
+            <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">Red Flag Detection</h4>
             <p className="text-[11px] text-text-secondary mt-0.5 leading-relaxed font-noto">बच्चों के खतरे के लक्षणों (Red Flags) की त्वरित पहचान।</p>
           </div>
         </div>
 
-        <div className="bg-slate-50 border border-slate-200/40 rounded-2xl p-4 flex gap-3 items-start">
-          <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600">
+        <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200/40 dark:border-slate-700/40 rounded-2xl p-4 flex gap-3 items-start">
+          <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
             <MapPin className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-800">PHC Recommendations</h4>
+            <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">PHC Recommendations</h4>
             <p className="text-[11px] text-text-secondary mt-0.5 leading-relaxed font-noto">निकटतम 24x7 सक्रिय प्राथमिक स्वास्थ्य केंद्र की मैपिंग और टेलीफोन संपर्क।</p>
           </div>
         </div>
@@ -257,19 +257,16 @@ export default function HomePage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ delay: 0.1 }}
-              className="bg-white rounded-3xl p-6 md:p-10 w-full max-w-md shadow-2xl border border-slate-100 text-center"
+              className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-10 w-full max-w-md shadow-2xl border border-slate-100 dark:border-slate-700 text-center"
             >
               {/* Medical Pulse Animation */}
               <div className="relative w-24 h-24 mx-auto mb-6 flex items-center justify-center bg-info-bg rounded-full border border-info/10 shadow-inner">
-                {/* Ring Pulses */}
                 <span className="absolute inset-0 rounded-full bg-info/10 animate-ping" />
                 <span className="absolute inset-2 rounded-full bg-info/15 animate-pulse" />
-                
-                {/* Stethoscope/Pulse Icon */}
                 <Heart className="w-10 h-10 text-info animate-heartbeat shrink-0" />
               </div>
 
-              <h3 className="text-xl font-display font-extrabold text-slate-900 mb-2">
+              <h3 className="text-xl font-display font-extrabold text-slate-900 dark:text-slate-100 mb-2">
                 Analyzing Symptoms...
               </h3>
               <p className="font-noto text-sm text-info font-bold mb-5 tracking-wide">
@@ -278,19 +275,19 @@ export default function HomePage() {
 
               {/* Skeleton loading lines */}
               <div className="space-y-3.5 max-w-xs mx-auto mb-6 opacity-80">
-                <div className="h-4 bg-slate-100 rounded-full w-full overflow-hidden relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/60 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />
+                <div className="h-4 bg-slate-100 dark:bg-slate-700 rounded-full w-full overflow-hidden relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/60 dark:via-slate-600/60 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />
                 </div>
-                <div className="h-3 bg-slate-100 rounded-full w-5/6 overflow-hidden relative mx-auto">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/60 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />
+                <div className="h-3 bg-slate-100 dark:bg-slate-700 rounded-full w-5/6 overflow-hidden relative mx-auto">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/60 dark:via-slate-600/60 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />
                 </div>
-                <div className="h-3 bg-slate-100 rounded-full w-4/6 overflow-hidden relative mx-auto">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/60 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />
+                <div className="h-3 bg-slate-100 dark:bg-slate-700 rounded-full w-4/6 overflow-hidden relative mx-auto">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/60 dark:via-slate-600/60 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />
                 </div>
               </div>
 
               {/* Guidelines subtext */}
-              <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200/40 text-xs text-text-muted leading-relaxed font-noto">
+              <div className="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-2xl border border-slate-200/40 dark:border-slate-600/40 text-xs text-text-muted leading-relaxed font-noto">
                 Consulting diagnostic RAG database, checking critical symptoms, and mapping local PHC capacities.
               </div>
             </motion.div>
