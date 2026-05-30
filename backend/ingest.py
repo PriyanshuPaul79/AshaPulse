@@ -16,7 +16,7 @@ load_dotenv()
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 
-ROOT_DIR   = Path(_file_).resolve().parent.parent
+ROOT_DIR   = Path(__file__).resolve().parent.parent
 DOCS_DIR   = ROOT_DIR / "Docs"
 CHROMA_DIR = ROOT_DIR / "data" / "chroma_db"
 
@@ -106,7 +106,7 @@ def build_vectorstore(chunks: list) -> Chroma:
     # )
 
     embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    model_name="all-MiniLM-L6-v2",
     model_kwargs={"device": "cpu"},
     encode_kwargs={"normalize_embeddings": True},
 )
@@ -202,5 +202,5 @@ def main():
     print("═" * 55 + "\n")
 
 
-if _name_ == "_main_":
+if __name__ == "_main_":
     main()
