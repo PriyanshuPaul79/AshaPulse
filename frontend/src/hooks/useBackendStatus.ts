@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-const API_BASE = "http://localhost:8000";
-
+// const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_BASE = "https://ashapulse-production-444b.up.railway.app";
 export function useBackendStatus() {
   const [isOnline, setIsOnline] = useState(false);
   const [mode, setMode] = useState<string | null>(null);
