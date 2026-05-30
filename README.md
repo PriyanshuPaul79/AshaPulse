@@ -35,7 +35,6 @@ It combines **symptom triage**, **RAG-based protocol grounding**, **multilingual
 - **Backend API:** FastAPI
 - **RAG Pipeline:** LangChain + ChromaDB + sentence-transformers + Ollama (mistral:7b)
 - **Datastores:**
-  - MongoDB for diagnosis history
   - SQLite (`data/phc_directory.db`) for PHC master directory
   - Chroma persistent vector DB (`data/chroma_db`) for protocol retrieval
 
@@ -186,12 +185,6 @@ Base URL: `http://localhost:5000`
 - Better offline mode and sync queue
 - District analytics dashboard
 - Authentication and role-based supervisor panel
-
----
-
-## 🤝 Contributors
-
-Team **NiDaan** – Innoquest Hackathon 2025
 
 ---
 
