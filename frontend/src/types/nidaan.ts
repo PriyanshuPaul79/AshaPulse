@@ -34,6 +34,7 @@ export interface Medicine {
   name: string;
   dosage: string;
   duration: string;
+  source?: "asha_kit" | "nlem_2022";
 }
 
 export interface DiagnosisResult {
@@ -44,7 +45,11 @@ export interface DiagnosisResult {
   home_care: string[];
   medicines: Medicine[];
   advice_in_hindi: string;
-  suggested_services?: string[]; // derived from diagnosis reason/criticality
+  suggested_services?: string[];
+  diagnosis?: string;
+  differential_diagnosis?: string[];
+  follow_up_days?: string;
+  reassess_if_worsens?: string[];
 }
 
 export interface DiagnosisAPIResponse {
