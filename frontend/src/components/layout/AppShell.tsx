@@ -45,7 +45,7 @@ export default function AppShell() {
           {/* Logo & Title */}
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl flex items-center justify-center">
-              <img src="/src/assets/Nidaan.png" alt="NiDaan" className="w-9 h-9" />
+              <img src="/Nidaan.png" alt="NiDaan" className="w-9 h-9" />
             </div>
             <div>
               <span className="font-display font-extrabold text-xl tracking-tight bg-gradient-to-r from-info to-teal-600 bg-clip-text text-transparent">
