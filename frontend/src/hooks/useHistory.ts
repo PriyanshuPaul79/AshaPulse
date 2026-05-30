@@ -16,12 +16,19 @@ export function useHistory() {
   }, []);
 
   const addRecord = (record: DiagnosisRecord) => {
-    setRecords(prev => {
-      const newRecords = [record, ...prev].slice(0, 20); // Keep last 20
-      localStorage.setItem('nidaan_history', JSON.stringify(newRecords));
-      return newRecords;
-    });
-  };
+  setRecords(prev => {
+    // Skip if same symptoms were saved within the last 60 seconds
+    const isDuplicate = prev.some(r =>
+      r.symptoms === record.symptoms &&
+      Math.abs(new Date(r.timestamp).getTime() - new Date(record.timestamp).getTime()) < 60_000
+    );
+    if (isDuplicate) return prev;
+
+    const newRecords = [record, ...prev].slice(0, 20);
+    localStorage.setItem('nidaan_history', JSON.stringify(newRecords));
+    return newRecords;
+  });
+};
 
   const clearAll = () => {
     localStorage.removeItem('nidaan_history');
