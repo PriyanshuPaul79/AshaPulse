@@ -214,7 +214,7 @@ export default function PhcPage() {
               {/* Header Info */}
               <div className="flex gap-4 mb-4">
                 <div className="w-12 h-12 rounded-2xl  flex items-center justify-center text-info shrink-0 select-none">
-                  <img src="/src/assets/hos_g.png" alt="phc-icon" className="w-12 h-12" />
+                  <img src="/hos_g.png" alt="phc-icon" className="w-12 h-12" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <h3 className="font-display font-extrabold text-slate-900 dark:text-slate-100 leading-tight mb-1 text-base md:text-lg">
