@@ -13,7 +13,10 @@ import type {
 } from "../types/nidaan";
 
 const API_BASE =
-  import.meta.env.VITE_API_URL || "http://localhost:8000";
+  // import.meta.env.VITE_API_URL || 
+  //"http://localhost:8000" ||
+  //"https://nidaan-n0ve.onrender.com";
+  "https://ashapulse-production-444b.up.railway.app";
 
 const SESSION_KEY = "nidaan_session";
 
