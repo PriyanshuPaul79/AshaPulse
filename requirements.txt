@@ -7,7 +7,6 @@ langchain-openai
 huggingface-hub
 langchain-groq
 chromadb
-langchain_nvidia_nim
 # pdfplumber
 # pypdf
 httpx
