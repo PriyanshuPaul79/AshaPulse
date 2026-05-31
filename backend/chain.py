@@ -1028,7 +1028,8 @@ def load_llm():
             temperature=0,
             api_key=api_key,
             base_url="https://integrate.api.nvidia.com/v1",
-            max_tokens=4096,
+            max_tokens=2048,
+            timeout= 30,
         )
 
     elif MODE == "deepseek":
