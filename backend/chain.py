@@ -1011,7 +1011,7 @@ def load_llm():
             raise ValueError("GROQ_API_KEY not found in .env")
         print("  LLM : Groq — llama-3.1-8b-instant (cloud)")
         return ChatGroq(
-            model="llama-3.1-70b-versatile",
+            model="openai/gpt-oss-20b",
             temperature=0,
             api_key=api_key,
             model_kwargs={"response_format": {"type": "json_object"}},
