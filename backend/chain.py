@@ -1024,12 +1024,11 @@ def load_llm():
             raise ValueError("NVIDIA_NIM_API_KEY not found in .env")
         print("  LLM : NVIDIA NIM — mistral-large-3-675b-instruct-2512 (cloud)")
         return ChatOpenAI(
-            model="mistralai/mistral-large-3-675b-instruct-2512",
+            model="deepseek-ai/deepseek-v4-flash",
             temperature=0,
             api_key=api_key,
             base_url="https://integrate.api.nvidia.com/v1",
-            max_tokens=2048,
-            timeout= 30,
+     
         )
 
     elif MODE == "deepseek":
