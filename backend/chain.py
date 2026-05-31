@@ -31,7 +31,7 @@ load_dotenv()
 
 # ╔══════════════════════════════════════════════════════╗
 # ║           CHANGE THIS LINE TO SWITCH LLM            ║
-MODE = "groq"   # "groq" | "nim" | "deepseek"
+MODE = "nim"   # "groq" | "nim" | "deepseek"
 # ╚══════════════════════════════════════════════════════╝
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
@@ -1011,7 +1011,7 @@ def load_llm():
             raise ValueError("GROQ_API_KEY not found in .env")
         print("  LLM : Groq — llama-3.1-8b-instant (cloud)")
         return ChatGroq(
-            model="openai/gpt-oss-20b",
+            model="llama-3.1-8b-instant",
             temperature=0,
             api_key=api_key,
             model_kwargs={"response_format": {"type": "json_object"}},
@@ -1022,9 +1022,9 @@ def load_llm():
         api_key = os.getenv("NVIDIA_NIM_API_KEY")
         if not api_key:
             raise ValueError("NVIDIA_NIM_API_KEY not found in .env")
-        print("  LLM : NVIDIA NIM — mistral-large-3-675b-instruct-2512 (cloud)")
+        print("  LLM : NVIDIA NIM — llama-3.3-nemotron-super-49b-v1.5 (cloud)")
         return ChatOpenAI(
-            model="deepseek-ai/deepseek-v4-flash",
+            model="nvidia/llama-3.3-nemotron-super-49b-v1.5",
             temperature=0,
             api_key=api_key,
             base_url="https://integrate.api.nvidia.com/v1",
