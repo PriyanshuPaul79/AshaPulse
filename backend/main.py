@@ -161,8 +161,6 @@ def recommend_phc(request: PHCRecommendationRequest):
             recommendations=[],
             error=str(e)
         )
-
 if __name__ == "__main__":
-    import uvicorn
-    port = int(os.getenv("PORT", 8080))  # Railway sets PORT, default to 8080 locally
+    port = int(os.getenv("PORT", 8080))
     uvicorn.run(app, host="0.0.0.0", port=port)
