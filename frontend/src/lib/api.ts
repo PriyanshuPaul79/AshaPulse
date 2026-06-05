@@ -12,7 +12,7 @@ import type {
   PHCResult,
 } from "../types/nidaan";
 
-const API_BASE="https://ashapulse-production-444b.up.railway.app";
+const API_BASE="https://ashapulse-production.up.railway.app/";
 
 const SESSION_KEY = "nidaan_session";
 
