@@ -35,7 +35,7 @@ from phc_recommender import recommend_phcs
 async def lifespan(app: FastAPI):
     """Load RAG chain on startup. Keeps it in memory for all requests."""
     print("\nStarting NiDaan API...")
-    #get_chain()   # initialise once — cached for all subsequent requests
+    get_chain()   # initialise once — cached for all subsequent requests
     yield
     print("\nShutting down NiDaan API...")
 
