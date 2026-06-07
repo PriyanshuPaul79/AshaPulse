@@ -5,6 +5,10 @@ It combines **symptom triage**, **RAG-based protocol grounding**, **multilingual
 
 ---
 
+## Demo
+
+![Demo GIF](./frontend/src/assets/Nidaan_demo_gif.gif)
+
 ## 🌟 Frontend Screenshots
 
 ### 1) Diagnose Screen
