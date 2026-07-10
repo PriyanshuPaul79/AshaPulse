@@ -1,0 +1,601 @@
+[
+  {
+    "id": "tc_001",
+    "symptoms": "5 saal ke bacche ko 3 din se bukhaar hai, khaana kam kha raha hai lekin paani/doodh theek se pi raha hai",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["fever", "viral"],
+      "must_not_have": ["pneumonia", "malaria"],
+      "follow_up_days": "3"
+    },
+    "_fix_note": "Original had ambiguous 'not eating' (could be misread as IMCI danger sign 'not able to drink/breastfeed'). Added age and clarified hydration status so expected 'medium' is unambiguous."
+  },
+  {
+    "id": "tc_002",
+    "symptoms": "mahila ko prasav ke baad bahut zyada khoon aa raha hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["postpartum", "hemorrhage", "bleeding"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_003",
+    "symptoms": "pet mein dard hai aur dast ho raha hai pichle 2 din se",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["gastroenteritis", "diarrhea"],
+      "must_not_have": ["severe dehydration"],
+      "follow_up_days": "3"
+    }
+  },
+  {
+    "id": "tc_004",
+    "symptoms": "sans lene mein takleef ho rahi hai, seena dard kar raha hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["pneumonia", "respiratory", "chest"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_005",
+    "symptoms": "halka bukhaar hai, 38.2°C, naak beh rahi hai, chhike aa rahi hain",
+    "expected": {
+      "criticality": "low",
+      "refer_to_phc": false,
+      "medicines_count_max": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["cold", "URTI", "viral"],
+      "must_not_have": [],
+      "follow_up_days": "7"
+    }
+  },
+  {
+    "id": "tc_006",
+    "symptoms": "6 hafte ke bacche ko bukhaar hai, doodh nahi pi raha",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["sepsis", "infection", "neonatal"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_007",
+    "symptoms": "3 din se tez bukhaar 40°C hai, aur ulti aa rahi hai, kuch nahi rukta pet mein",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["severe", "high fever", "infection", "dehydration"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    },
+    "_fix_note": "'Can't keep anything down' is itself a dehydration/danger sign, added to diagnosis_keywords."
+  },
+  {
+    "id": "tc_008",
+    "symptoms": "2 din se halka pet dard hai, ek baar ulti hui hai, ab theek hai",
+    "expected": {
+      "criticality": "low",
+      "refer_to_phc": false,
+      "medicines_count_max": 2,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["gastritis", "vomiting", "mild"],
+      "must_not_have": ["severe", "critical"],
+      "follow_up_days": "7"
+    }
+  },
+  {
+    "id": "tc_009",
+    "symptoms": "bacche ko daura pad raha hai, aankh uper chal rahi hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["convulsion", "seizure", "daura"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_010",
+    "symptoms": "10 din se khansi hai, halka bukhaar 38°C hai, saans theek hai, seena nahi dhansa",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["bronchitis", "cough", "respiratory"],
+      "must_not_have": ["pneumonia", "severe"],
+      "follow_up_days": "3"
+    }
+  },
+  {
+    "id": "tc_011",
+    "symptoms": "garbhvati mahila ko pairon mein sujan hai aur sar mein dard hai, aankh se dhundla dikhta hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["eclampsia", "preeclampsia", "pregnancy"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_012",
+    "symptoms": "bukhaar 38.8°C hai 2 din se, paani pi raha hai, alert hai",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["fever", "viral", "infection"],
+      "must_not_have": ["malaria"],
+      "follow_up_days": "3"
+    }
+  },
+  {
+    "id": "tc_013",
+    "symptoms": "saamp ne kata hai, haath mein, bahut dard ho raha hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["snake", "bite", "venom"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_014",
+    "symptoms": "halka sardi hai, gala kharaash hai, nigalte waqt dard hota hai, bukhaar nahi hai",
+    "expected": {
+      "criticality": "low",
+      "refer_to_phc": false,
+      "medicines_count_max": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["pharyngitis", "cold", "sore throat"],
+      "must_not_have": ["fever", "severe"],
+      "follow_up_days": "7"
+    },
+    "_fix_note": "'thandi chiz se dard' read more like tooth sensitivity than classic sore throat; reworded to 'pain on swallowing' for a cleaner pharyngitis signal."
+  },
+  {
+    "id": "tc_015",
+    "symptoms": "baccha 8 mahine ka hai, 38.2°C bukhaar hai, doodh pi raha hai, khel raha hai",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["fever", "viral"],
+      "must_not_have": ["sepsis", "serious"],
+      "follow_up_days": "3"
+    }
+  },
+  {
+    "id": "tc_016",
+    "symptoms": "budhhe aadmi ko saans phool rahi hai, chhati mein dard hai, pasina aa raha hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["heart", "cardiac", "MI", "chest", "elderly"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_017",
+    "symptoms": "2 din se dast ho raha hai, 4-5 baar, aankh nahi dhansi, pi raha hai paani",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["diarrhea", "gastroenteritis"],
+      "must_not_have": ["dehydration", "severe"],
+      "follow_up_days": "3"
+    }
+  },
+  {
+    "id": "tc_018",
+    "symptoms": "aankh dhansi hui hai, rote hue aansoo nahi, chamdi jhurri hui, peshab nahi hua 10 ghante se",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["dehydration", "severe", "hypovolemia"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_019",
+    "symptoms": "kutte ne kata hai, halka kharaash hai, pet ka kutta tha",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["animal", "bite", "rabies", "PEP"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    },
+    "_fix_note": "MAJOR FIX: India's National Rabies Control Programme requires PEP vaccination referral for ANY animal bite (even minor scratches from a pet), regardless of severity. Original expected 'medium/no referral' was clinically incorrect and would penalize a model giving the medically correct answer."
+  },
+  {
+    "id": "tc_020",
+    "symptoms": "bacche ka seena andar dhans raha hai, tez saans chal rahi hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["pneumonia", "chest indrawing", "respiratory distress"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_021",
+    "symptoms": "gale mein dard hai, 2 din se 38.5°C bukhaar hai, nikalte waqt dard hota hai",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["tonsillitis", "pharyngitis", "sore throat"],
+      "must_not_have": ["abscess", "severe"],
+      "follow_up_days": "3"
+    }
+  },
+  {
+    "id": "tc_022",
+    "symptoms": "mai theek nahi hoon, kamzori hai, kuch khaas nahi hai",
+    "expected": {
+      "criticality": "low",
+      "refer_to_phc": false,
+      "medicines_count_max": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["fatigue", "weakness", "mild"],
+      "must_not_have": ["severe", "critical", "infection"],
+      "follow_up_days": "7"
+    }
+  },
+  {
+    "id": "tc_023",
+    "symptoms": "5 mahine ke bacche ko 38.5°C bukhaar hai, doodh pi raha hai, halka khansi hai",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["fever", "respiratory"],
+      "must_not_have": ["sepsis", "pneumonia"],
+      "follow_up_days": "3"
+    },
+    "_fix_note": "Original age (3 months) sat in a genuine guideline gray zone (IMCI young-infant cutoff is ~2 months), making 'medium' an ambiguous expected answer. Moved to 5 months so it's unambiguously past the young-infant high-risk window."
+  },
+  {
+    "id": "tc_024",
+    "symptoms": "kuch zeher kha liya hai, bacche ne, ulti aa rahi hai, pet mein jalan",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["poisoning", "poison", "toxic"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_025",
+    "symptoms": "pet mein dard hai 2 din se, dast nahi, bukhaar nahi, halka dard hai",
+    "expected": {
+      "criticality": "low",
+      "refer_to_phc": false,
+      "medicines_count_max": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["abdominal", "pain", "mild", "gastritis"],
+      "must_not_have": ["appendicitis", "severe", "surgical"],
+      "follow_up_days": "7"
+    }
+  },
+  {
+    "id": "tc_026",
+    "symptoms": "bacche ko khansi hai 15 din se, raat mein zyada khansi aati hai, bukhaar nahi",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": true,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["chronic", "cough", "tuberculosis", "bronchitis"],
+      "must_not_have": ["pneumonia", "severe"],
+      "follow_up_days": "3"
+    },
+    "_fix_note": "MAJOR FIX: cough persisting >2 weeks triggers TB screening protocol under India's NTEP/RNTCP guidelines. refer_to_phc changed false→true (criticality stays medium; this is a screening referral, not an emergency one)."
+  },
+  {
+    "id": "tc_027",
+    "symptoms": "4 din se bukhaar 39.2°C hai, ulti 2 baar hui, paani pi raha hai, thoda kamzori hai",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["fever", "viral", "gastroenteritis"],
+      "must_not_have": ["severe", "meningitis"],
+      "follow_up_days": "3"
+    }
+  },
+  {
+    "id": "tc_028",
+    "symptoms": "behoshi aa gayi thi, 2 minute mein hosh aa gaya, ab theek hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["syncope", "unconscious", "seizure", "neuro"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_029",
+    "symptoms": "pichle 3 din se bahut kamzori hai, baar baar chakkar aate hain, khada hote hi aankhon ke saamne andhera chha jata hai",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": true,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["anemia", "fatigue", "weakness", "iron"],
+      "must_not_have": ["severe", "hemorrhage"],
+      "follow_up_days": "3"
+    },
+    "_fix_note": "MAJOR FIX: symptomatic anemia (dizziness/blackout on standing) indicates a meaningful Hb drop, not a 'low' risk case. ASHA protocol refers such cases for Hb testing. criticality low→medium, refer_to_phc false→true. Also sharpened symptom description to make 'symptomatic' unambiguous."
+  },
+  {
+    "id": "tc_030",
+    "symptoms": "gardan akad gayi hai, 39.5°C bukhaar hai, roshni se takleef hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["meningitis", "stiff neck", "meningeal"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    },
+    "_fix_note": "Minor typo fix only: 'garda' → 'gardan' (neck)."
+  },
+  {
+    "id": "tc_031",
+    "symptoms": "baccha 1 saal ka hai, 7 din se dast ho raha hai, 6-7 baar, aankh thodi dhansi hai, thoda paani pi raha hai",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": true,
+      "medicines_count_min": 2,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["diarrhea", "dehydration", "gastroenteritis"],
+      "must_not_have": ["severe dehydration", "shock"],
+      "follow_up_days": "3"
+    },
+    "_fix_note": "MAJOR FIX: sunken eyes present = IMCI 'some dehydration' classification, which requires facility-based ORS (Plan B) — refer_to_phc false→true. Criticality stays medium since it's not severe dehydration/shock."
+  },
+  {
+    "id": "tc_032",
+    "symptoms": "garbhvati mahila hai, 7 mahine ka garbh hai, bacche ki halchal kam ho gayi hai, BP high hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["eclampsia", "preeclampsia", "pregnancy", "reduced fetal movement"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    },
+    "_fix_note": "Original phrasing ('ultra sound mein... garbh mein jhatke aaye hain') was confusingly worded (sounded like fetal seizures, which isn't a real clinical concept). Reworded to 'reduced fetal movement + high BP', which is the actual pre-eclampsia/fetal-distress red flag intended."
+  },
+  {
+    "id": "tc_033",
+    "symptoms": "37.8°C bukhaar hai, gala thoda dard hai, bhookh hai, active hai",
+    "expected": {
+      "criticality": "low",
+      "refer_to_phc": false,
+      "medicines_count_max": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["URTI", "viral", "cold", "mild"],
+      "must_not_have": ["severe", "bacterial"],
+      "follow_up_days": "7"
+    }
+  },
+  {
+    "id": "tc_034",
+    "symptoms": "sir mein bahut dard hai, 38.6°C bukhaar hai, gardan akadpan hai, roshni se takleef",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["meningitis", "meningeal", "infection"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    },
+    "_note": "Kept as-is but flagging: this is near-duplicate of tc_030 (both are meningitis triads). Consider swapping one out for coverage diversity — see suggestions below."
+  },
+  {
+    "id": "tc_035",
+    "symptoms": "baccha 2 saal ka hai, raat mein khansi aati hai, 3 din se halka bukhaar hai 38.2°C, bhookh nahi, khel raha hai",
+    "expected": {
+      "criticality": "medium",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["respiratory", "cough", "fever", "viral"],
+      "must_not_have": ["pneumonia", "severe"],
+      "follow_up_days": "3"
+    }
+  },
+  {
+    "id": "tc_036",
+    "symptoms": "boodhi maa ko 75 saal hain, achanak confuse ho gayin hain, baat nahi samajh pa rahin, ek haath nahi chal raha",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["stroke", "CVA", "cerebrovascular", "elderly", "paralysis"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_037",
+    "symptoms": "pet mein kida hai shayad, raat ko dard hota hai, bhookh zyada lagti hai",
+    "expected": {
+      "criticality": "low",
+      "refer_to_phc": false,
+      "medicines_count_min": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["worms", "parasitic", "helminth"],
+      "must_not_have": ["severe", "obstruction"],
+      "follow_up_days": "7"
+    }
+  },
+  {
+    "id": "tc_038",
+    "symptoms": "pichle 2 din se peshab mein khoon aa raha hai, aur dard ho raha hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["hematuria", "UTI", "urinary", "infection"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_039",
+    "symptoms": "shishu 20 din ka hai, peeliya hai, aankh peeli hai, bukhaar nahi, doodh pi raha hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["jaundice", "neonatal", "icterus", "newborn"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_040",
+    "symptoms": "kamjor baccha hai, haddiya dikhti hain, pairon mein sujan hai, baar baar bimari",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["malnutrition", "wasting", "severe"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  },
+  {
+    "id": "tc_041",
+    "symptoms": "halka sar dard hai, thakan hai, bukhaar nahi, dawai se theek ho jata hai",
+    "expected": {
+      "criticality": "low",
+      "refer_to_phc": false,
+      "medicines_count_max": 1,
+      "home_care_count_min": 3,
+      "red_flags_count_min": 0,
+      "diagnosis_keywords": ["headache", "tension", "mild", "fatigue"],
+      "must_not_have": ["migraine", "severe", "infection"],
+      "follow_up_days": "7"
+    }
+  },
+  {
+    "id": "tc_042",
+    "symptoms": "burhe aadmi ke haath mein gehri jalan hui hai chulhe se, chamdi laal aur fool gayi hai",
+    "expected": {
+      "criticality": "high",
+      "refer_to_phc": true,
+      "medicines_count_max": 0,
+      "home_care_count_max": 0,
+      "red_flags_count_min": 2,
+      "diagnosis_keywords": ["burn", "second degree", "injury"],
+      "must_not_have": [],
+      "follow_up_days": "immediate_referral"
+    }
+  }
+]
