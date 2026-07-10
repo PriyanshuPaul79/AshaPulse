@@ -10,6 +10,15 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 
+
+# E5 requires query: prefix for queries and passage: prefix for docs
+class E5Embeddings(HuggingFaceEmbeddings):
+    def embed_documents(self, texts):
+        return super().embed_documents([f"passage: {t}" for t in texts])
+
+    def embed_query(self, text):
+        return super().embed_query(f"query: {text}")
+
 # ── Load Environment Variables ────────────────────────────────────────────────
 
 load_dotenv()
@@ -105,11 +114,11 @@ def build_vectorstore(chunks: list) -> Chroma:
     #     huggingfacehub_api_token=os.getenv("HUGGINGFACEHUB_API_TOKEN"),
     # )
 
-    embeddings = HuggingFaceEmbeddings(
-    model_name="all-MiniLM-L6-v2",
-    model_kwargs={"device": "cpu"},
-    encode_kwargs={"normalize_embeddings": True},
-)
+    embeddings = E5Embeddings(
+        model_name="intfloat/multilingual-e5-small",
+        model_kwargs={"device": "cpu"},
+        encode_kwargs={"normalize_embeddings": True},
+    )
 
     print("Building ChromaDB vector store...")
     print(f"Location: {CHROMA_DIR}\n")
@@ -202,5 +211,5 @@ def main():
     print("═" * 55 + "\n")
 
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()
