@@ -672,7 +672,7 @@ if __name__ == "__main__":
 #   6. Removed duplicate/contradictory rules that confused the small model
 # ─────────────────────────────────────────────────────────────────────────────
 
-=======
+
 # backend/chain.py
 # NiDaan — RAG Diagnostic Chain
 #
