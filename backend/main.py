@@ -10,6 +10,7 @@
 #   uvicorn backend.main:app --reload --port 8000
 import sys
 import os
+import uvicorn
 sys.path.append(os.path.dirname(__file__))
 os.environ["HF_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN", "")
 
@@ -117,6 +118,14 @@ def diagnose(request: DiagnoseRequest):
         chain  = get_chain()
         result = chain(request.symptoms.strip())
 
+        # Guardrail block: if chain returned non-medical response,
+        # return as an error so frontend stays on home page
+        if result.get("diagnosis", "").startswith("unclear"):
+            return DiagnoseResponse(
+                success=False,
+                error="कृपया केवल चिकित्सा लक्षण बताएं। यह उपकरण केवल स्वास्थ्य निर्णय सहायता के लिए है।\nPlease describe medical symptoms only.",
+            )
+
         return DiagnoseResponse(
             success=True,
             data=result,
@@ -162,5 +171,4 @@ def recommend_phc(request: PHCRecommendationRequest):
             error=str(e)
         )
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8080))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host="0.0.0.0", port=7860)
