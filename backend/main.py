@@ -22,6 +22,8 @@ from contextlib import asynccontextmanager
 import traceback
 
 from chain import get_chain
+from guardrails.input import check_input
+from guardrails.output import check_output
 from schemas import (
     ASHAResponse,
     PHCRecommendationRequest,
@@ -101,30 +103,29 @@ def diagnose(request: DiagnoseRequest):
     home care advice, medicines, and PHC referral decision.
     """
 
-    # Basic input validation
-    if not request.symptoms.strip():
-        raise HTTPException(
-            status_code=400,
-            detail="Symptoms cannot be empty"
-        )
+    # Guardrail: validate input
+    input_check = check_input(request.symptoms)
 
-    if len(request.symptoms.strip()) < 5:
-        raise HTTPException(
-            status_code=400,
-            detail="Please describe symptoms in more detail"
-        )
+    if not input_check.passed:
+        error_msg = "; ".join(input_check.violations)
+        if input_check.has_prompt_injection:
+            error_msg = "Input contains potentially unsafe content. Please describe medical symptoms only."
+        elif input_check.is_empty:
+            error_msg = "Symptoms cannot be empty."
+        elif input_check.is_irrelevant:
+            error_msg = "कृपया केवल चिकित्सा लक्षण बताएं। यह उपकरण केवल स्वास्थ्य निर्णय सहायता के लिए है।\nPlease describe medical symptoms only."
+        raise HTTPException(status_code=400, detail=error_msg)
 
     try:
         chain  = get_chain()
-        result = chain(request.symptoms.strip())
+        result = chain(input_check.sanitized)
 
-        # Guardrail block: if chain returned non-medical response,
-        # return as an error so frontend stays on home page
-        if result.get("diagnosis", "").startswith("unclear"):
-            return DiagnoseResponse(
-                success=False,
-                error="कृपया केवल चिकित्सा लक्षण बताएं। यह उपकरण केवल स्वास्थ्य निर्णय सहायता के लिए है।\nPlease describe medical symptoms only.",
-            )
+        # Guardrail: validate output structure
+        output_check = check_output(result)
+        if not output_check.passed:
+            print(f"[guardrail] Output violations: {output_check.violations}")
+            # ponytail: log violations but still return — blocking a valid diagnosis
+            # for formatting issues is worse UX
 
         return DiagnoseResponse(
             success=True,
