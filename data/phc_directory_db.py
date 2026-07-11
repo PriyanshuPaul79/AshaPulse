@@ -215,20 +215,22 @@ def build_database() -> None:
                   recursive=True)
     )
 
+    # Connect first so DB file exists even if no JSON — ponytail: empty DB > crash
+    conn   = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    create_tables(cursor)
+
     if not json_files:
-        print("❌ No JSON files found.")
-        print(f"   Expected location: {PHC_JSON_DIR}/west_bengal/*.json")
-        sys.exit(1)
+        print("⚠️  No JSON files found — created empty database")
+        print(f"   Expected: {PHC_JSON_DIR}/west_bengal/*.json")
+        conn.commit()
+        conn.close()
+        return
 
     print(f"Found {len(json_files)} JSON file(s):\n")
     for f in json_files:
         print(f"  → {os.path.relpath(f, SCRIPT_DIR)}")
     print()
-
-    # Connect and set up database
-    conn   = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    create_tables(cursor)
 
     # Counters for summary
     total_inserted  = 0
@@ -336,6 +338,15 @@ def build_database() -> None:
 
 
 # ── Run ───────────────────────────────────────────────────────────────────────
+def init_phc_database():
+    """Initialize database from JSON if it doesn't exist."""
+    if os.path.exists(DB_PATH):
+        print("[DB] Database already exists, skipping initialization")
+        return
+    
+    print("[DB] Initializing database from JSON files...")
+    build_database()
+
 
 if __name__ == "__main__":
     build_database()
