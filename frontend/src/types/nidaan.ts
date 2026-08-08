@@ -12,7 +12,9 @@ export interface DiagnosisResult {
   refer_to_phc: boolean;
   reason: string;
   red_flags: string[];
+  red_flags_in_hindi?: string[];
   home_care: string[];
+  home_care_in_hindi?: string[];
   medicines: Medicine[];
   advice_in_hindi: string;
   suggested_services?: string[];
@@ -20,6 +22,7 @@ export interface DiagnosisResult {
   differential_diagnosis?: string[];
   follow_up_days?: string;
   reassess_if_worsens?: string[];
+  reassess_if_worsens_in_hindi?: string[];
 }
 
 export interface DiagnosisAPIResponse {
