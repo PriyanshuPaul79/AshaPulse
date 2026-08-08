@@ -7,9 +7,11 @@ import {
 import { motion } from "motion/react";
 import { usePHCRecommend } from "../hooks/usePHCRecommend";
 import type { CriticalityLevel } from "../types/nidaan";
+import { useLanguage } from "../lib/language";
 
 export default function PhcPage() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [searchParams] = useSearchParams();
   
   // Read navigation context params
@@ -118,9 +120,9 @@ export default function PhcPage() {
         <div>
           <h2 className="font-display font-extrabold text-2xl text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-1.5">
             <Hospital className="w-6 h-6 text-info shrink-0" />
-            <span>PHC Recommendation</span>
+            <span>{t("PHC Recommendation", "PHC सिफारिश")}</span>
           </h2>
-          <p className="text-text-secondary text-xs font-noto mt-0.5">प्राथमिक स्वास्थ्य केंद्र (रेफरल मार्गदर्शन)</p>
+          <p className="text-text-secondary text-xs font-noto mt-0.5">{t("Primary Health Center (Referral Guidance)", "प्राथमिक स्वास्थ्य केंद्र (रेफरल मार्गदर्शन)")}</p>
         </div>
       </div>
 
@@ -145,13 +147,13 @@ export default function PhcPage() {
           <div className="text-xs leading-relaxed font-semibold">
             <p className="font-bold text-sm">
               {paramCriticality === "high"
-                ? "HIGH URGENCY: Showing 24/7 PHCs First"
-                : "MEDIUM URGENCY: Showing Nearest Care Facilities"}
+                ? t("HIGH URGENCY: Showing 24/7 PHCs First", "उच्च आपातकाल: पहले 24/7 PHC दिखा रहे हैं")
+                : t("MEDIUM URGENCY: Showing Nearest Care Facilities", "मध्यम आपातकाल: नजदीकी उपचार केंद्र दिखा रहे हैं")}
             </p>
             <p className="opacity-90 font-noto mt-1 text-[11px] leading-relaxed">
               {paramCriticality === "high"
-                ? "रोगी की स्थिति अति गंभीर है। तुरंत आपातकालीन उपचार और एम्बुलेंस सुविधा वाले स्वास्थ्य केंद्र से संपर्क करें।"
-                : "मरीज की सामान्य निगरानी और विशेषज्ञ उपचार हेतु नजदीकी केंद्रों की सूची।"}
+                ? t("The patient's condition is highly critical. Contact a center with emergency treatment and ambulance facilities immediately.", "रोगी की स्थिति अति गंभीर है। तुरंत आपातकालीन उपचार और एम्बुलेंस सुविधा वाले स्वास्थ्य केंद्र से संपर्क करें।")
+                : t("List of nearby centers for routine monitoring and specialist care of the patient.", "मरीज की सामान्य निगरानी और विशेषज्ञ उपचार हेतु नजदीकी केंद्रों की सूची।")}
             </p>
           </div>
         </motion.div>
@@ -160,7 +162,7 @@ export default function PhcPage() {
       {/* ── District Dropdown Selector ── */}
       <div className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 md:p-5 shadow-xs">
         <label className="block text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
-          Select District / ज़िला चुनें
+          {t("Select District", "ज़िला चुनें")}
         </label>
         <div className="relative">
           <select
@@ -196,9 +198,9 @@ export default function PhcPage() {
           <div className="w-16 h-16 bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-full flex items-center justify-center mb-4 text-slate-300 dark:text-slate-500">
             <AlertCircle className="w-7 h-7" />
           </div>
-          <h3 className="text-slate-800 dark:text-slate-200 font-extrabold text-base mb-1">कोई स्वास्थ्य केंद्र नहीं मिला</h3>
+          <h3 className="text-slate-800 dark:text-slate-200 font-extrabold text-base mb-1">{t("No health center found", "कोई स्वास्थ्य केंद्र नहीं मिला")}</h3>
           <p className="text-text-muted text-sm font-noto max-w-xs mx-auto">
-            {error || "इस जिले में वर्तमान में कोई डेटा उपलब्ध नहीं है / No PHCs found in this district"}
+            {error || t("No PHCs found in this district", "इस जिले में वर्तमान में कोई डेटा उपलब्ध नहीं है")}
           </p>
         </motion.div>
       ) : (
@@ -232,7 +234,7 @@ export default function PhcPage() {
                 <div className="flex justify-between items-center text-xs mb-2">
                   <span className="font-extrabold text-slate-700 dark:text-slate-300 flex items-center gap-1">
                     <Sparkles className="w-3.5 h-3.5 text-info" />
-                    <span>Match Compatibility:</span>
+                    <span>{t("Match Compatibility:", "सेवा अनुकूलता:")}</span>
                     <span className={`px-2 py-0.5 rounded font-mono font-bold ${getProgressBarBg(phc.service_match_score)}`}>
                       {Math.round(phc.service_match_score * 100)}%
                     </span>
@@ -245,7 +247,7 @@ export default function PhcPage() {
                   />
                 </div>
                 <p className="text-[10px] text-text-muted italic leading-relaxed font-noto">
-                  Match reasoning: {phc.match_reason}
+                  {t("Match reasoning: ", "मैच का कारण: ")}{phc.match_reason}
                 </p>
               </div>
 
@@ -264,7 +266,7 @@ export default function PhcPage() {
 
                 <div className="flex items-center gap-2 font-medium bg-slate-50 dark:bg-slate-700/50 px-3 py-2 rounded-xl">
                   <Phone className="w-4 h-4 text-slate-400 shrink-0" />
-                  <span className="truncate font-mono">{phc.contact || "No Phone Contact"}</span>
+                  <span className="truncate font-mono">{phc.contact || t("No Phone Contact", "कोई फोन संपर्क नहीं")}</span>
                 </div>
               </div>
 
@@ -281,7 +283,7 @@ export default function PhcPage() {
                 ))}
                 {phc.ambulance && (
                   <span className="px-2.5 py-1 bg-red-50 dark:bg-red-900/20 border border-red-200/60 dark:border-red-800/30 rounded-lg text-[10px] uppercase tracking-wider font-black text-rose-600 animate-pulse flex items-center gap-1 shadow-xs shadow-red-100/50">
-                    🚑 Emergency Ambulance
+                    🚑 {t("Emergency Ambulance", "आपातकालीन एम्बुलेंस")}
                   </span>
                 )}
               </div>
@@ -297,7 +299,7 @@ export default function PhcPage() {
                     className="flex-1 h-11 bg-info hover:bg-info/95 text-white font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all text-xs shadow-md shadow-info/10 cursor-pointer"
                   >
                     <Compass className="w-4 h-4 shrink-0" />
-                    <span>GET DIRECTIONS</span>
+                    <span>{t("GET DIRECTIONS", "रास्ता दिखाएं")}</span>
                   </button>
                 ) : (
                   <button
@@ -305,7 +307,7 @@ export default function PhcPage() {
                     className="flex-1 h-11 bg-slate-100 dark:bg-slate-700 text-slate-400 cursor-not-allowed font-bold rounded-xl flex items-center justify-center gap-1.5 text-xs border border-slate-200/50 dark:border-slate-600/50"
                   >
                     <Compass className="w-4 h-4 shrink-0" />
-                    <span>DIRECTIONS N/A</span>
+                    <span>{t("DIRECTIONS N/A", "रास्ता उपलब्ध नहीं")}</span>
                   </button>
                 )}
 
@@ -315,7 +317,7 @@ export default function PhcPage() {
                     className="px-5 h-11 border border-slate-200 dark:border-slate-700 hover:border-info/40 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all text-xs cursor-pointer"
                   >
                     <PhoneCall className="w-4 h-4 shrink-0 text-info" />
-                    <span>CALL</span>
+                    <span>{t("CALL", "कॉल करें")}</span>
                   </a>
                 ) : (
                   <button
@@ -323,7 +325,7 @@ export default function PhcPage() {
                     className="px-5 h-11 border border-slate-200 dark:border-slate-700 text-slate-300 dark:text-slate-600 cursor-not-allowed font-bold rounded-xl flex items-center justify-center gap-1.5 text-xs"
                   >
                     <PhoneCall className="w-4 h-4 shrink-0 text-slate-200 dark:text-slate-600" />
-                    <span>CALL N/A</span>
+                    <span>{t("CALL N/A", "कॉल उपलब्ध नहीं")}</span>
                   </button>
                 )}
               </div>

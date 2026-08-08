@@ -484,6 +484,7 @@ import {
 } from "lucide-react";
 import { loadResultFromSession, saveToHistory } from "../lib/api";
 import type { DiagnosisResult, CriticalityLevel } from "../types/nidaan";
+import { useLanguage } from "../lib/language";
 
 // ─── Severity Level Configuration ──────────────────────────────
 interface SeverityStyle {
@@ -524,6 +525,7 @@ const SEVERITY_CONFIG: Record<CriticalityLevel, SeverityStyle> = {
 
 export default function ResultPage() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [data, setData] = useState<DiagnosisResult | null>(null);
   const [symptoms, setSymptoms] = useState<string>("");
   const [saved, setSaved] = useState(false);
@@ -547,7 +549,7 @@ export default function ResultPage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <HeartPulse className="w-10 h-10 text-info animate-pulse" />
-          <span className="text-text-muted text-sm">Loading result...</span>
+          <span className="text-text-muted text-sm">{t("Loading result...", "परिणाम लोड हो रहा है...")}</span>
         </div>
       </div>
     );
@@ -575,11 +577,11 @@ export default function ResultPage() {
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back</span>
+            <span>{t("Back", "वापस")}</span>
           </button>
 
           <h2 className="font-display font-extrabold text-sm text-slate-800 dark:text-slate-200">
-            Diagnosis Result / निदान विवरण
+            {t("Diagnosis Result", "निदान विवरण")}
           </h2>
 
           <button
@@ -595,12 +597,12 @@ export default function ResultPage() {
             {saved ? (
               <>
                 <BookmarkCheck className="w-3.5 h-3.5" />
-                <span>Saved</span>
+                <span>{t("Saved", "सहेजा गया")}</span>
               </>
             ) : (
               <>
                 <Bookmark className="w-3.5 h-3.5" />
-                <span>Save</span>
+                <span>{t("Save", "सहेजें")}</span>
               </>
             )}
           </button>
@@ -621,10 +623,10 @@ export default function ResultPage() {
             </div>
             <div className="space-y-1">
               <h4 className="font-display font-black text-lg tracking-tight uppercase">
-                EMERGENCY REFERRAL REQUIRED
+                {t("EMERGENCY REFERRAL REQUIRED", "आपातकालीन रेफरल आवश्यक")}
               </h4>
               <p className="font-noto text-sm font-bold text-red-50 leading-relaxed">
-                रोगी को तुरंत नजदीकी प्राथमिक स्वास्थ्य केंद्र (PHC) ले जाएं। यह एक अति गंभीर आपातकालीन स्थिति है।
+                {t("Take the patient to the nearest Primary Health Center (PHC) immediately. This is a highly critical emergency.", "रोगी को तुरंत नजदीकी प्राथमिक स्वास्थ्य केंद्र (PHC) ले जाएं। यह एक अति गंभीर आपातकालीन स्थिति है।")}
               </p>
             </div>
           </motion.div>
@@ -641,14 +643,11 @@ export default function ResultPage() {
               <span className="text-4xl shrink-0 select-none">{sev.icon}</span>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider text-text-muted mb-0.5">
-                  Severity Rating / मरीज की गंभीरता
+                  {t("Severity Rating", "मरीज की गंभीरता")}
                 </p>
                 <div className="flex flex-wrap items-center gap-2">
                   <span className={`text-xs font-black px-2.5 py-1 rounded-md tracking-wider ${sev.badgeClass}`}>
-                    {sev.label}
-                  </span>
-                  <span className="text-slate-800 dark:text-slate-100 font-bold text-base md:text-lg font-noto">
-                    {sev.hindiLabel}
+                    {t(sev.label, sev.hindiLabel)}
                   </span>
                 </div>
               </div>
@@ -660,12 +659,12 @@ export default function ResultPage() {
                 : "bg-success-bg border-success/10 text-success"
               }`}>
               <span className="text-lg shrink-0">{data.refer_to_phc ? "🚑" : "🏠"}</span>
-              <div className="leading-tight">
-                <div>{data.refer_to_phc ? "PHC Refer Needed / रेफर करें" : "Home Care Sufficient / घरेलू उपचार"}</div>
-                <div className="text-[10px] font-medium opacity-85 font-noto mt-0.5">
-                  {data.refer_to_phc ? "प्राथमिक स्वास्थ्य केंद्र भेजें" : "घर पर उपचार संभव"}
+                <div className="leading-tight">
+                  <div>{data.refer_to_phc ? t("PHC Refer Needed", "रेफर करें") : t("Home Care Sufficient", "घरेलू उपचार")}</div>
+                  <div className="text-[10px] font-medium opacity-85 font-noto mt-0.5">
+                    {data.refer_to_phc ? t("Send to Primary Health Center", "प्राथमिक स्वास्थ्य केंद्र भेजें") : t("Home care is possible", "घर पर उपचार संभव")}
+                  </div>
                 </div>
-              </div>
             </div>
           </div>
         </motion.div>
@@ -679,7 +678,7 @@ export default function ResultPage() {
         >
           <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-1.5">
             <ClipboardList className="w-4 h-4 text-info" />
-            <span>Clinical Reasoning / निदान का मुख्य कारण</span>
+            <span>{t("Clinical Reasoning", "निदान का मुख्य कारण")}</span>
           </h4>
           <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300 font-medium">
             {data.reason}
@@ -695,7 +694,7 @@ export default function ResultPage() {
             className="bg-gradient-to-br from-info-bg to-emerald-50/20 dark:from-info-bg dark:to-emerald-900/10 border border-info/10 rounded-3xl p-6 shadow-sm"
           >
             <h4 className="text-xs font-bold uppercase tracking-wider text-info mb-3 flex items-center gap-1.5">
-              🗣️ Hindi Advice / हिंदी में महत्वपूर्ण सलाह
+              🗣️ {t("Hindi Advice", "हिंदी में महत्वपूर्ण सलाह")}
             </h4>
             <p className="font-hindi text-lg md:text-xl font-bold leading-relaxed text-slate-800 dark:text-slate-100 select-all">
               {data.advice_in_hindi}
@@ -713,7 +712,7 @@ export default function ResultPage() {
           >
             <h4 className="text-xs font-bold uppercase tracking-wider text-danger mb-4 flex items-center gap-1.5">
               <AlertCircle className="w-4.5 h-4.5 text-danger animate-pulse" />
-              <span>Danger Signs / खतरे के लक्षण (Red Flags)</span>
+              <span>{t("Danger Signs (Red Flags)", "खतरे के लक्षण (Red Flags)")}</span>
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {data.red_flags.map((flag, i) => (
@@ -739,9 +738,9 @@ export default function ResultPage() {
           >
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-1 flex items-center gap-1.5">
               <CheckCircle2 className="w-4.5 h-4.5 text-success" />
-              <span>Home Care protocols / घरेलू उपचार एवं देखभाल</span>
+              <span>{t("Home Care protocols", "घरेलू उपचार एवं देखभाल")}</span>
             </h4>
-            <p className="text-[10px] text-text-muted mb-4">ASHA workers can check off steps as they instruct the family.</p>
+            <p className="text-[10px] text-text-muted mb-4">{t("ASHA workers can check off steps as they instruct the family.", "ASHA कार्यकर्ता परिवार को निर्देश देते समय इन चरणों को चिह्नित कर सकते हैं।")}</p>
 
             <div className="space-y-2">
               {data.home_care.map((item, i) => {
@@ -779,7 +778,7 @@ export default function ResultPage() {
           >
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-1.5">
               <Pill className="w-4.5 h-4.5 text-info animate-[spin_4s_linear_infinite]" />
-              <span>Medicines / सुझाई गई दवाइयां</span>
+              <span>{t("Medicines", "सुझाई गई दवाइयां")}</span>
             </h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -797,11 +796,11 @@ export default function ResultPage() {
                     </p>
                     <div className="space-y-0.5 text-xs text-text-secondary">
                       <p className="flex items-center gap-1">
-                        <span className="font-bold text-slate-600 dark:text-slate-400">Dose:</span>
+                        <span className="font-bold text-slate-600 dark:text-slate-400">{t("Dose:", "खुराक:")}</span>
                         <span className="truncate">{med.dosage}</span>
                       </p>
                       <p className="flex items-center gap-1">
-                        <span className="font-bold text-slate-600 dark:text-slate-400">Duration:</span>
+                        <span className="font-bold text-slate-600 dark:text-slate-400">{t("Duration:", "अवधि:")}</span>
                         <span className="truncate">{med.duration}</span>
                       </p>
                       {med.source && (
@@ -828,14 +827,14 @@ export default function ResultPage() {
             <div className="flex items-center gap-2 mb-3">
               <h4 className="text-xs bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-medium px-2.5 py-1 rounded-lg flex items-center gap-1.5">
                 <HeartPulse className="w-4 h-4 text-info" />
-                <span>Likely Diagnosis / संभावित निदान</span>
+                <span>{t("Likely Diagnosis", "संभावित निदान")}</span>
               </h4>
             </div>
             <p className="text-base font-bold text-slate-800 dark:text-slate-100">{data.diagnosis}</p>
 
             {data.differential_diagnosis && data.differential_diagnosis.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-2">
-                <span className="text-xs text-text-muted font-medium self-center">Also consider:</span>
+<span className="text-xs text-text-muted font-medium self-center">{t("Also consider:", "इन पर भी विचार करें:")}</span>
                 {data.differential_diagnosis.map((d, i) => (
                   <span key={i} className="text-xs bg-slate-100 border border-slate-200 text-slate-600 font-medium px-2.5 py-1 rounded-lg">
                     {d}
@@ -856,7 +855,7 @@ export default function ResultPage() {
           >
             <h4 className="text-xs font-bold uppercase tracking-wider text-warning mb-4 flex items-center gap-1.5">
               <AlertTriangle className="w-4 h-4 text-warning dark:text-amber-300" />
-              <span>Return Immediately If / तुरंत वापस आएं अगर</span>
+              <span>{t("Return Immediately If", "तुरंत वापस आएं अगर")}</span>
             </h4>
             <div className="space-y-2">
               {data.reassess_if_worsens.map((trigger, i) => (
@@ -874,7 +873,7 @@ export default function ResultPage() {
           <div className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-3xl p-5 shadow-xs">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-info" />
-              <span>Follow-up Schedule / पुनः जांच</span>
+              <span>{t("Follow-up Schedule", "पुनः जांच")}</span>
             </h4>
 
             <div className="flex items-center gap-3">
@@ -883,11 +882,11 @@ export default function ResultPage() {
               </div>
 
               <div>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Next Review</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{t("Next Review", "अगली जांच")}</p>
                 <p className="font-bold text-slate-800 dark:text-slate-100">
                   {data.follow_up_days === "immediate_referral"
-                    ? "Immediate PHC Referral"
-                    : `${data.follow_up_days} Days`}
+                    ? t("Immediate PHC Referral", "तत्काल PHC रेफरल")
+                    : `${data.follow_up_days} ${t("Days", "दिन")}`}
                 </p>
               </div>
             </div>
@@ -915,7 +914,7 @@ export default function ResultPage() {
               }`}
           >
             <MapPin className="w-5 h-5 shrink-0" />
-            <span className="font-noto">PHC ढूंढें / Locate Nearby PHC</span>
+            <span className="font-noto">{t("Locate Nearby PHC", "PHC ढूंढें")}</span>
             <ChevronRight className="w-4.5 h-4.5 shrink-0 ml-0.5" />
           </button>
         </div>

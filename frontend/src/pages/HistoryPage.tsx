@@ -9,6 +9,7 @@ import { useHistory } from "../hooks/useHistory";
 import { saveResultToSession } from "../lib/api";
 import { formatDate, truncate } from "../lib/utils";
 import type { DiagnosisRecord, CriticalityLevel } from "../types/nidaan";
+import { useLanguage } from "../lib/language";
 
 // ─── Severity Color Maps ──────────────────────────────────────────
 const SEVERITY_DOT: Record<CriticalityLevel, string> = {
@@ -25,6 +26,7 @@ const SEVERITY_TEXT: Record<CriticalityLevel, string> = {
 
 export default function HistoryPage() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const { records, clearAll } = useHistory();
   const [filter, setFilter] = useState<"all" | CriticalityLevel>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -47,7 +49,7 @@ export default function HistoryPage() {
   });
 
   const handleClear = () => {
-    if (window.confirm("क्या आप सभी पिछले मामलों को हटाना चाहते हैं?\nAre you sure you want to clear all history? This cannot be undone.")) {
+    if (window.confirm(t("Are you sure you want to clear all history? This cannot be undone.", "क्या आप सभी पिछले मामलों को हटाना चाहते हैं? यह वापस नहीं हो सकता।"))) {
       clearAll();
     }
   };
@@ -65,9 +67,9 @@ export default function HistoryPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="font-display font-extrabold text-2xl text-slate-900 dark:text-slate-100 tracking-tight">
-            Case History / रिकॉर्ड
+            {t("Case History", "रिकॉर्ड")}
           </h2>
-          <p className="text-text-secondary text-xs font-noto mt-0.5">ASHA/ANM द्वारा पूर्व में जांचे गए मरीज</p>
+          <p className="text-text-secondary text-xs font-noto mt-0.5">{t("Patients previously examined by ASHA/ANM workers", "ASHA/ANM द्वारा पूर्व में जांचे गए मरीज")}</p>
         </div>
         {records.length > 0 && (
           <button
@@ -76,7 +78,7 @@ export default function HistoryPage() {
             title="Delete all / सब हटाएँ"
           >
             <Trash2 className="w-4 h-4" />
-            <span className="hidden sm:inline">Clear All</span>
+            <span className="hidden sm:inline">{t("Clear All", "सब हटाएं")}</span>
           </button>
         )}
       </div>
@@ -90,15 +92,15 @@ export default function HistoryPage() {
           <div className="w-20 h-20 bg-slate-50 dark:bg-slate-700 rounded-2xl flex items-center justify-center mb-4 border border-slate-100 dark:border-slate-600">
             <FileText className="w-9 h-9 text-slate-300 dark:text-slate-500" />
           </div>
-          <h3 className="text-slate-800 dark:text-slate-200 font-extrabold text-base mb-1">कोई पिछला मामला नहीं</h3>
+          <h3 className="text-slate-800 dark:text-slate-200 font-extrabold text-base mb-1">{t("No past cases", "कोई पिछला मामला नहीं")}</h3>
           <p className="text-text-muted text-sm max-w-xs mx-auto mb-6">
-            No past cases found. Patients you diagnose will appear here for subsequent follow-up.
+            {t("No past cases found. Patients you diagnose will appear here for subsequent follow-up.", "कोई पिछला मामला नहीं मिला। आपके जांचे गए मरीज आगे की निगरानी के लिए यहां दिखाई देंगे।")}
           </p>
           <button
             onClick={() => navigate("/")}
             className="px-6 py-3 bg-info text-white text-sm font-bold rounded-xl shadow-md hover:bg-info/95 hover:shadow-lg transition-all cursor-pointer"
           >
-            मरीज जांच शुरू करें / Diagnose Now
+            {t("Diagnose Now", "मरीज जांच शुरू करें")}
           </button>
         </motion.div>
       ) : (
@@ -107,7 +109,7 @@ export default function HistoryPage() {
           <div className="grid grid-cols-4 gap-2.5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 p-3 rounded-2xl shadow-xs">
             <div className="bg-slate-50 dark:bg-slate-700/60 border border-slate-100 dark:border-slate-600/60 rounded-xl p-2.5 text-center">
               <span className="block text-lg md:text-xl font-extrabold text-slate-800 dark:text-slate-100">{stats.total}</span>
-              <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Total</span>
+              <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider">{t("Total", "कुल")}</span>
             </div>
             <div className="bg-red-50/50 dark:bg-red-900/10 border border-red-100/50 dark:border-red-800/30 rounded-xl p-2.5 text-center">
               <span className="block text-lg md:text-xl font-extrabold text-danger">{stats.high}</span>
@@ -132,7 +134,7 @@ export default function HistoryPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="लक्षण या निदान से खोजें / Search by symptoms or reasoning..."
+                placeholder={t("Search by symptoms or reasoning...", "लक्षण या निदान से खोजें...")}
                 className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl py-3 pl-11 pr-4 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-info focus:ring-4 focus:ring-info/5 transition-all"
               />
             </div>
@@ -150,7 +152,7 @@ export default function HistoryPage() {
                       : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
                   }`}
                 >
-                  {type}
+{type === "all" ? t("ALL", "सभी") : type}
                 </button>
               ))}
             </div>
@@ -201,17 +203,17 @@ export default function HistoryPage() {
                           {record.result?.refer_to_phc ? (
                             <span className="text-[10px] font-bold text-rose-600 bg-rose-50 dark:bg-rose-900/20 border border-rose-100 dark:border-rose-800/30 px-1.5 py-0.5 rounded flex items-center gap-1">
                               <ShieldAlert className="w-3 h-3" />
-                              <span>PHC Refer</span>
+                              <span>{t("PHC Refer", "PHC रेफर")}</span>
                             </span>
                           ) : (
                             <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/30 px-1.5 py-0.5 rounded flex items-center gap-1">
                               <CheckCircle2 className="w-3 h-3" />
-                              <span>Home Care</span>
+                              <span>{t("Home Care", "घरेलू उपचार")}</span>
                             </span>
                           )}
                         </div>
                         <span className="text-xs text-info font-bold flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <span>Revisit</span>
+                          <span>{t("Revisit", "दोबारा देखें")}</span>
                           <ChevronRight className="w-3.5 h-3.5" />
                         </span>
                       </div>
@@ -223,7 +225,7 @@ export default function HistoryPage() {
 
             {filteredRecords.length === 0 && (
               <div className="text-center py-10 text-text-muted text-sm font-medium">
-                No past cases matches the filter / search criteria.
+                {t("No past cases matches the filter / search criteria.", "फिल्टर / खोज मानदंड से कोई मामला मेल नहीं खाता।")}
               </div>
             )}
           </div>

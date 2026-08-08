@@ -5,6 +5,7 @@
 
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './lib/theme';
+import { LanguageProvider } from './lib/language';
 import AppShell from './components/layout/AppShell';
 import HomePage from './pages/HomePage';
 import ResultPage from './pages/ResultPage';
@@ -13,7 +14,8 @@ import HistoryPage from './pages/HistoryPage';
 
 export default function App() {
   return (
-    <ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
       <HashRouter>
         <Routes>
           <Route path="/" element={<AppShell />}>
@@ -25,6 +27,7 @@ export default function App() {
         </Routes>
       </HashRouter>
     </ThemeProvider>
+    </LanguageProvider>
   );
 }
 
