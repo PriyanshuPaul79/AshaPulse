@@ -1,33 +1,3 @@
-// export type CriticalityLevel = "low" | "medium" | "high";
-
-// export interface Medicine {
-//   name: string;
-//   dosage: string;
-//   duration: string;
-// }
-
-// export interface DiagnosisResult {
-//   criticality: CriticalityLevel;
-//   refer_to_phc: boolean;
-//   reason: string;
-//   red_flags: string[];
-//   home_care: string[];
-//   medicines: Medicine[];
-//   advice_in_hindi: string;
-// }
-
-// export interface DiagnosisRecord {
-//   id: string;
-//   symptoms: string;
-//   result: DiagnosisResult;
-//   timestamp: string;  // ISO string
-// }
-
-
-
-// types/nidaan.ts
-// Matches backend/schemas.py Pydantic models exactly
-
 export type CriticalityLevel = "low" | "medium" | "high";
 
 export interface Medicine {
