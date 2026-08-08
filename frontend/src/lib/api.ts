@@ -122,23 +122,6 @@ export function getHistory(): DiagnosisRecord[] {
   const updated = [newRecord, ...history].slice(0, MAX_HISTORY);
   localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
 }
-// export function saveToHistory(
-//   symptoms: string,
-//   result: DiagnosisResult
-// ): void {
-//   const history = getHistory();
-
-//   const newRecord: DiagnosisRecord = {
-//     id: crypto.randomUUID(),
-//     symptoms,
-//     result,
-//     timestamp: new Date().toISOString(),
-//   };
-
-//   // Prepend new record, evict oldest if over limit
-//   const updated = [newRecord, ...history].slice(0, MAX_HISTORY);
-//   localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
-// }
 
 export function clearHistory(): void {
   localStorage.removeItem(HISTORY_KEY);
