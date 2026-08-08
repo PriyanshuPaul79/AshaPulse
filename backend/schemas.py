@@ -23,7 +23,11 @@ class ASHAResponse(BaseModel):
     refer_to_phc:   bool
     reason:         str           # why this criticality level
     red_flags:      List[str]     # danger signs ASHA must watch for
+    red_flags_in_hindi: List[str] = [] # 1:1 Hindi translation of red_flags
     home_care:      List[str]     # steps if not referring (empty if refer=True)
+    home_care_in_hindi: List[str] = []  # 1:1 Hindi translation of home_care
+    reassess_if_worsens: List[str] = [] # triggers when to return/reassess
+    reassess_if_worsens_in_hindi: List[str] = [] # 1:1 Hindi translation of reassess_if_worsens
     medicines:      List[Medicine] # only ASHA drug kit medicines
     advice_in_hindi: str          # plain Hindi summary for patient
     suggested_services: List[str] = [] # new optional field, default empty
