@@ -4,12 +4,13 @@ import { PlusCircle, ClipboardList, MapPin, Info, Activity, X, Moon, Sun } from 
 import { cn } from "../../lib/utils";
 import { checkHealth } from "../../lib/api";
 import { useTheme } from "../../lib/theme";
+import { useLanguage } from "../../lib/language";
 
 export default function AppShell() {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
+  const { lang, t, toggleLang } = useLanguage();
   const [isBackendOnline, setIsBackendOnline] = useState(false);
-  const [backendMode, setBackendMode] = useState<string | null>(null);
   const [showAbout, setShowAbout] = useState(false);
 
   // Check backend status on mount and periodically
@@ -18,10 +19,8 @@ export default function AppShell() {
       try {
         const health = await checkHealth();
         setIsBackendOnline(true);
-        setBackendMode(health.mode);
       } catch {
         setIsBackendOnline(false);
-        setBackendMode(null);
       }
     };
     check();
@@ -30,9 +29,9 @@ export default function AppShell() {
   }, []);
 
   const navItems = [
-    { to: "/", icon: PlusCircle, label: "Diagnose", hindiLabel: "जांच करें" },
-    { to: "/history", icon: ClipboardList, label: "History", hindiLabel: "इतिहास" },
-    { to: "/phc", icon: MapPin, label: "PHC Map", hindiLabel: "नजदीकी केंद्र" }
+    { to: "/", icon: PlusCircle, en: "Diagnose", hi: "जांच करें" },
+    { to: "/history", icon: ClipboardList, en: "History", hi: "इतिहास" },
+    { to: "/phc", icon: MapPin, en: "PHC Map", hi: "नजदीकी केंद्र" }
   ];
 
   return (
@@ -69,14 +68,22 @@ export default function AppShell() {
                   )}
                 >
                   <item.icon className="w-4.5 h-4.5" />
-                  <span>{item.label}</span>
+                  <span>{t(item.en, item.hi)}</span>
                 </NavLink>
               );
             })}
           </nav>
 
-          {/* Right actions: Dark Mode + About + Status */}
+          {/* Right actions: Dark Mode + Language + About + Status */}
           <div className="flex items-center gap-2">
+            {/* Language toggle */}
+            <button
+              onClick={toggleLang}
+              className="p-2 rounded-xl text-text-muted hover:text-info hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-bold text-sm w-9 h-9 flex items-center justify-center"
+              title={lang === "en" ? "Switch to Hindi / हिंदी" : "Switch to English"}
+            >
+              {lang === "en" ? "हिं" : "EN"}
+            </button>
             {/* Dark / Light mode toggle */}
             <button
               onClick={toggleTheme}
@@ -112,10 +119,10 @@ export default function AppShell() {
                 isBackendOnline ? "bg-success animate-pulse" : "bg-danger"
               )} />
               <span className="hidden sm:inline">
-                {isBackendOnline ? `${(backendMode || "Ollama").toUpperCase()} AI Engine` : "AI Engine Offline"}
+                {isBackendOnline ? t("AI Engine Online", "AI इंजन ऑनलाइन") : t("AI Engine Offline", "AI इंजन ऑफ़लाइन")}
               </span>
               <span className="sm:hidden">
-                {isBackendOnline ? "ONLINE" : "OFFLINE"}
+                {isBackendOnline ? t("ONLINE", "ऑनलाइन") : t("OFFLINE", "ऑफ़लाइन")}
               </span>
             </div>
           </div>
@@ -141,7 +148,7 @@ export default function AppShell() {
               )}
             >
               <item.icon className={cn("w-5.5 h-5.5 mb-0.5 transition-transform duration-200", isActive && "scale-110 text-info")} strokeWidth={isActive ? 2.5 : 2} />
-              <span className="text-[10px] font-semibold leading-none">{isActive ? item.label : item.hindiLabel}</span>
+              <span className="text-[10px] font-semibold leading-none">{t(item.en, item.hi)}</span>
             </NavLink>
           );
         })}
@@ -163,31 +170,31 @@ export default function AppShell() {
                 <img src="/src/assets/Nidaan.png" alt="NiDaan" className="w-14 h-10" />
               </div>
               <div>
-                <h3 className="font-display font-extrabold text-lg text-slate-900 dark:text-slate-100">About NiDaan / निदान</h3>
-                <p className="text-xs text-text-muted">AI Diagnostic Assistant for Rural Healthcare</p>
+                <h3 className="font-display font-extrabold text-lg text-slate-900 dark:text-slate-100">{t("About NiDaan", "NiDaan के बारे में")}</h3>
+                <p className="text-xs text-text-muted">{t("AI Diagnostic Assistant for Rural Healthcare", "ग्रामीण स्वास्थ्य सेवा के लिए AI निदान सहायक")}</p>
               </div>
             </div>
 
             <div className="space-y-3.5 text-sm text-text-secondary">
               <p className="leading-relaxed">
-                <strong>NiDaan (निदान)</strong> is an advanced clinical support system designed specifically for 
-                <strong> ASHA and ANM health workers</strong> in rural India.
+                <strong>NiDaan</strong> {t("is an advanced clinical support system designed specifically for", "एक उन्नत क्लिनिकल सहायता प्रणाली है, जो विशेष रूप से")}
+                <strong> {t("ASHA and ANM health workers", "ASHA और ANM स्वास्थ्य कार्यकर्ताओं")} </strong>
+                {t("in rural India.", "के लिए बनाई गई है।")}
               </p>
               <p className="leading-relaxed">
-                By entering patient symptoms in Hindi, Hinglish, or English, NiDaan uses local <strong>F-IMNCI</strong> 
-                (Integrated Management of Neonatal and Childhood Illness) clinical guidelines combined with a local 
-                RAG (Retrieval-Augmented Generation) knowledge base to immediately assess criticality.
+                {t("By entering patient symptoms in Hindi, Hinglish, or English, NiDaan uses local", "हिंदी, Hinglish, या English में मरीज के लक्षण दर्ज करने पर NiDaan स्थानीय")} <strong>F-IMNCI</strong>{" "}
+                {t("clinical guidelines combined with a local RAG (Retrieval-Augmented Generation) knowledge base to immediately assess criticality.", "क्लिनिकल दिशानिर्देशों और स्थानीय RAG (रेट्रिवल-ऑगमेंटेड जनरेशन) ज्ञान आधार का उपयोग करके तुरंत गंभीरता का आकलन करता है।")}
               </p>
               <div className="p-3.5 rounded-xl bg-info-bg/50 border border-info/10 text-xs dark:text-slate-300 space-y-1">
                 <p className="font-bold flex items-center gap-1 text-info">
                   <Activity className="w-4 h-4" /> CLINICAL STANDARDS
                 </p>
-                <p>• Automatic severity classification (Low, Medium, High)</p>
-                <p>• Real-time identification of pediatric Red Flags</p>
-                <p>• PHC Directory integration for immediate patient referrals</p>
+                <p>{t("• Automatic severity classification (Low, Medium, High)", "• स्वचालित गंभीरता वर्गीकरण (Low, Medium, High)")}</p>
+                <p>{t("• Real-time identification of pediatric Red Flags", "• बच्चों के खतरे के लक्षणों (Red Flags) की तुरंत पहचान")}</p>
+                <p>{t("• PHC Directory integration for immediate patient referrals", "• तत्काल रेफरल के लिए PHC निर्देशिका एकीकरण")}</p>
               </div>
               <p className="text-xs text-text-muted italic border-t border-slate-100 dark:border-slate-700 pt-3">
-                Disclaimer: NiDaan is a diagnostic helper to support decision-making, not a replacement for a qualified professional physician.
+                {t("Disclaimer: NiDaan is a diagnostic helper to support decision-making, not a replacement for a qualified professional physician.", "अस्वीकरण: NiDaan निर्णय लेने में सहायता के लिए एक डायग्नोस्टिक सहायक है, यह किसी योग्य पेशेवर चिकित्सक का विकल्प नहीं है।")}
               </p>
             </div>
             
@@ -195,7 +202,7 @@ export default function AppShell() {
               onClick={() => setShowAbout(false)}
               className="w-full mt-5 bg-info hover:bg-info/95 text-white font-bold py-3 rounded-xl transition-all shadow-md shadow-info/20"
             >
-              ठीक है / Close
+              {t("Close", "ठीक है")}
             </button>
           </div>
         </div>
