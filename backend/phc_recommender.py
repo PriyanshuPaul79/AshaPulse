@@ -1,13 +1,16 @@
 import os
 import sqlite3
+import sys
 from math import radians, sin, cos, sqrt, atan2
 from typing import List, Optional
 
-# Define database path
+# Define database path — data/ lives at the repo root, not inside backend/
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR,"data", "phc_directory.db")
+ROOT_DIR = os.path.dirname(BASE_DIR)
+DB_PATH = os.path.join(ROOT_DIR, "data", "phc_directory.db")
 
 # auto-build DB from JSON if missing — ponytail: no manual step needed
+sys.path.insert(0, ROOT_DIR)
 from data.phc_directory_db import init_phc_database
 init_phc_database()
 
