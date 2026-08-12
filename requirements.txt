@@ -1,12 +1,14 @@
 langchain
 langchain-core
 langchain-community
+langchain-classic
 langchain-chroma
 langchain-huggingface
 langchain-openai
 huggingface-hub
 langchain-groq
 chromadb
+rank-bm25
 # pdfplumber
 # pypdf
 httpx
